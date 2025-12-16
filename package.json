@@ -1,0 +1,25 @@
+{
+  "name": "collection-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^2.14.0",
+    "@nuxthub/core-nightly": "^0.10.0-20251210-113644-c25eff9",
+    "@nuxtjs/supabase": "^1.1.4",
+    "nuxt": "^3.10.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@nuxthub/core": "^0.7.20",
+    "@types/node": "^20.10.0"
+  }
+}

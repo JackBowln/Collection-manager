@@ -1,0 +1,64 @@
+{
+  "auth": {
+    "welcome_back": "Bem-vindo de volta",
+    "create_account": "Criar Conta",
+    "email": "Email",
+    "password": "Senha",
+    "full_name": "Nome Completo",
+    "sign_in": "Entrar",
+    "sign_up": "Cadastrar",
+    "or_continue_with": "Ou continue com",
+    "dont_have_account": "Não tem uma conta?",
+    "already_have_account": "Já tem uma conta?",
+    "success_login": "Login realizado com sucesso",
+    "success_signup": "Conta criada. Verifique seu email.",
+    "verifying": "Verificando login..."
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "actions": "Ações",
+    "yes": "Sim",
+    "no": "Não",
+    "confirm_delete": "Tem certeza que deseja excluir isso?"
+  },
+  "dashboard": {
+    "title": "Minhas Coleções",
+    "new_collection": "Nova Coleção",
+    "empty_state": "Nenhuma coleção ainda",
+    "empty_description": "Comece criando sua primeira coleção.",
+    "sign_out": "Sair"
+  },
+  "collection": {
+    "create_title": "Criar Nova Coleção",
+    "edit_title": "Editar Coleção",
+    "name": "Nome da Coleção",
+    "description": "Descrição",
+    "basic_details": "Detalhes Básicos",
+    "custom_fields": "Campos Personalizados",
+    "add_field": "Adicionar Campo",
+    "no_fields": "Nenhum campo definido. Adicione campos para estruturar sua coleção.",
+    "field_definition": "Definição do Campo",
+    "field_name": "Nome do Campo",
+    "field_type": "Tipo do Campo",
+    "options": "Opções (separadas por vírgula)",
+    "visible": "Visível na Tabela",
+    "types": {
+      "text": "Texto Curto",
+      "textarea": "Texto Longo",
+      "number": "Número",
+      "date": "Data",
+      "boolean": "Sim/Não",
+      "select": "Seleção (Lista)",
+      "multiselect": "Seleção Múltipla"
+    },
+    "new_item": "Novo Item",
+    "import_excel": "Importar Excel",
+    "search_placeholder": "Buscar itens...",
+    "filters": "Filtros"
+  }
+}
