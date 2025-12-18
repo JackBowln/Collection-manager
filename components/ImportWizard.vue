@@ -7,7 +7,7 @@
         @click="triggerFileInput"
       >
         <UIcon name="i-heroicons-document-arrow-up" class="w-12 h-12 text-gray-400 mx-auto mb-2" />
-        <p class="text-gray-600 dark:text-gray-300">Click to upload .xlsx file</p>
+        <p class="text-gray-600 dark:text-gray-300">Clique para enviar arquivo .xlsx</p>
         <input 
           ref="fileInput" 
           type="file" 
@@ -20,20 +20,20 @@
 
     <!-- Step 2: Map Columns -->
     <div v-if="step === 2">
-      <h3 class="font-bold mb-4">Map Columns</h3>
+      <h3 class="font-bold mb-4">Mapear Colunas</h3>
       <div class="space-y-3 max-h-96 overflow-y-auto">
         <div v-for="field in collectionFields" :key="field.id" class="grid grid-cols-2 gap-4 items-center">
           <div class="text-sm font-medium">{{ field.name }} <span v-if="field.required" class="text-red-500">*</span></div>
           <USelect 
             v-model="mapping[field.id]" 
             :options="fileHeaders" 
-            placeholder="Select Excel Column"
+            placeholder="Selecione Coluna Excel"
           />
         </div>
       </div>
       
       <div class="mt-4">
-        <h4 class="font-bold text-sm mb-2">Preview (First Row)</h4>
+        <h4 class="font-bold text-sm mb-2">Pré-visualização (Primeira Linha)</h4>
         <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs overflow-x-auto">
           <pre>{{ previewRow }}</pre>
         </div>
@@ -43,13 +43,13 @@
     <!-- Step 3: Processing -->
     <div v-if="step === 3" class="text-center py-8">
       <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 animate-spin text-primary-500 mx-auto mb-4" />
-      <p>Processing {{ fullData.length }} items...</p>
+      <p>Processando {{ fullData.length }} itens...</p>
     </div>
 
     <!-- Actions -->
     <div class="flex justify-end gap-3 mt-6">
-      <UButton v-if="step > 1 && step < 3" color="gray" variant="ghost" @click="step = 1">Back</UButton>
-      <UButton v-if="step === 2" @click="processImport">Import Rows</UButton>
+      <UButton v-if="step > 1 && step < 3" color="gray" variant="ghost" @click="step = 1">Voltar</UButton>
+      <UButton v-if="step === 2" @click="processImport">Importar Linhas</UButton>
     </div>
   </div>
 </template>

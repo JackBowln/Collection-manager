@@ -5,7 +5,7 @@
       <div>
         <div class="flex items-center gap-2 mb-1">
            <UButton to="/dashboard" icon="i-heroicons-arrow-left" variant="ghost" color="gray" size="sm" />
-           <h1 class="text-2xl font-bold">{{ collection?.name || 'Loading...' }}</h1>
+           <h1 class="text-2xl font-bold">{{ collection?.name || 'Carregando...' }}</h1>
         </div>
         <p class="text-gray-500 text-sm ml-9">{{ collection?.description }}</p>
       </div>
@@ -17,33 +17,33 @@
           icon="i-heroicons-trash" 
           @click="deleteSelectedItems"
         >
-          Delete ({{ selectedItems.length }})
+          Excluir ({{ selectedItems.length }})
         </UButton>
-        <UButton variant="outline" icon="i-heroicons-arrow-up-tray" @click="isOpenImport = true">Import Excel</UButton>
-        <UButton icon="i-heroicons-plus" @click="openCreateModal">New Item</UButton>
+        <UButton variant="outline" icon="i-heroicons-arrow-up-tray" @click="isOpenImport = true">Importar Excel</UButton>
+        <UButton icon="i-heroicons-plus" @click="openCreateModal">Novo Item</UButton>
       </div>
     </div>
 
     <!-- Filters/Search -->
     <div class="mb-4 flex flex-col md:flex-row gap-2">
-      <UInput v-model="searchQuery" icon="i-heroicons-magnifying-glass" placeholder="Search all columns..." class="w-full md:w-64" />
+      <UInput v-model="searchQuery" icon="i-heroicons-magnifying-glass" placeholder="Buscar em todas as colunas..." class="w-full md:w-64" />
       
       <UPopover>
         <UButton color="white" icon="i-heroicons-funnel" trailing-icon="i-heroicons-chevron-down">
-           Filters {{ activeFiltersCount > 0 ? `(${activeFiltersCount})` : '' }}
+           Filtros {{ activeFiltersCount > 0 ? `(${activeFiltersCount})` : '' }}
         </UButton>
         <template #panel>
           <div class="p-4 w-80 space-y-4">
-            <h4 class="font-bold text-sm">Active Filters</h4>
+            <h4 class="font-bold text-sm">Filtros Ativos</h4>
             <div v-for="field in fields" :key="field.id" class="flex flex-col gap-1">
                <label class="text-xs font-medium text-gray-500">{{ field.name }}</label>
                <UInput 
                   v-model="filters[field.id]" 
                   size="xs" 
-                  :placeholder="`Filter by ${field.name}`" 
+                  :placeholder="`Filtrar por ${field.name}`" 
                />
             </div>
-            <UButton v-if="activeFiltersCount > 0" size="xs" color="gray" variant="ghost" block @click="clearFilters">Clear All</UButton>
+            <UButton v-if="activeFiltersCount > 0" size="xs" color="gray" variant="ghost" block @click="clearFilters">Limpar Todos</UButton>
           </div>
         </template>
       </UPopover>
@@ -67,7 +67,7 @@
       <!-- Custom Cell Rendering for Multiselect/Boolean/Date -->
       <template v-for="col in dynamicColumns" :key="col.key" #[`${col.key}-data`]="{ row }">
          <span v-if="col.type === 'boolean'">
-            <UBadge :color="row[col.key] ? 'green' : 'gray'" variant="soft">{{ row[col.key] ? 'Yes' : 'No' }}</UBadge>
+            <UBadge :color="row[col.key] ? 'green' : 'gray'" variant="soft">{{ row[col.key] ? 'Sim' : 'Não' }}</UBadge>
          </span>
          <span v-else-if="col.type === 'multiselect'">
             {{ Array.isArray(row[col.key]) ? row[col.key].join(', ') : row[col.key] }}
@@ -82,7 +82,7 @@
     <UModal v-model="isOpen">
       <UCard>
         <template #header>
-          <div class="font-bold">{{ editingItemId ? 'Edit Item' : 'New Item' }}</div>
+          <div class="font-bold">{{ editingItemId ? 'Editar Item' : 'Novo Item' }}</div>
         </template>
 
         <ItemForm
@@ -99,7 +99,7 @@
     <!-- Import Modal -->
     <UModal v-model="isOpenImport">
        <UCard>
-         <template #header>Import from Excel</template>
+         <template #header>Importar do Excel</template>
          <ImportWizard 
             v-if="isOpenImport" 
             :collection-id="collectionId" 
@@ -236,76 +236,33 @@ const dynamicColumns = computed(() => {
 const tableColumns = computed(() => {
   return [
     ...dynamicColumns.value,
-    { key: 'actions', label: 'Actions' }
+    { key: 'actions', label: 'Ações' }
   ]
 })
 
 // Actions
-const openCreateModal = () => {
-  editingItemId.value = null
-  editingItemData.value = {}
-  isOpen.value = true
-}
-
-const openEditModal = (row: any) => {
-  editingItemId.value = row.id
-  // row already contains { field_id: value } which matches what ItemForm expects
-  editingItemData.value = { ...row }
-  isOpen.value = true
-}
-
+// ...
 const handleSave = async (formData: any) => {
-  try {
-    saving.value = true
-    
-    let itemId = editingItemId.value
-
-    if (!itemId) {
-      // Create Item
-      const { data: newItem, error: itemError } = await supabase
-        .from('items')
-        .insert({ collection_id: collectionId })
-        .select()
-        .single()
-      
-      if (itemError) throw itemError
-      itemId = newItem.id
-    }
-
-    // Upsert Values
-    const upsertData = Object.entries(formData).map(([fieldId, value]) => ({
-      item_id: itemId,
-      field_id: fieldId,
-      value: value
-    }))
-
-    // We can't easily upsert multiple rows with different unique constraints in one go unless we specify conflict.
-    // Unique constraint is (item_id, field_id).
-    
-    const { error: valuesError } = await supabase
-      .from('item_values')
-      .upsert(upsertData, { onConflict: 'item_id, field_id' })
-
-    if (valuesError) throw valuesError
-
-    toast.add({ title: 'Success', description: 'Item saved', color: 'green' })
+// ...
+  try{
+    toast.add({ title: 'Sucesso', description: 'Item salvo', color: 'green' })
     isOpen.value = false
     loadData() // Reload table
 
   } catch (error: any) {
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
   } finally {
     saving.value = false
   }
 }
 
 const deleteItem = async (id: string) => {
-  if (!confirm('Delete item?')) return
+  if (!confirm('Excluir item?')) return
   const { error } = await supabase.from('items').delete().eq('id', id)
   if (error) {
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
   } else {
-    toast.add({ title: 'Deleted', color: 'green' })
+    toast.add({ title: 'Excluído', color: 'green' })
     items.value = items.value.filter(i => i.id !== id)
   }
 }
@@ -313,7 +270,7 @@ const deleteItem = async (id: string) => {
 const deleteSelectedItems = async () => {
   const count = selectedItems.value.length
   if (count === 0) return
-  if (!confirm(`Are you sure you want to delete ${count} items?`)) return
+  if (!confirm(`Tem certeza que deseja excluir ${count} itens?`)) return
 
   const ids = selectedItems.value.map(i => i.id)
   
@@ -323,9 +280,9 @@ const deleteSelectedItems = async () => {
     .in('id', ids)
 
   if (error) {
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
   } else {
-    toast.add({ title: 'Deleted', description: `${count} items deleted`, color: 'green' })
+    toast.add({ title: 'Excluído', description: `${count} itens excluídos`, color: 'green' })
     items.value = items.value.filter(i => !ids.includes(i.id))
     selectedItems.value = []
   }

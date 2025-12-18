@@ -2,19 +2,19 @@
   <div class="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
     <UCard class="w-full max-w-md">
       <template #header>
-        <h1 class="text-xl font-bold text-center">Welcome Back</h1>
+        <h1 class="text-xl font-bold text-center">Bem-vindo de volta</h1>
       </template>
 
       <form @submit.prevent="handleLogin" class="space-y-4">
-        <UFormGroup label="Email" name="email">
-          <UInput v-model="email" type="email" placeholder="you@example.com" required />
+        <UFormGroup label="E-mail" name="email">
+          <UInput v-model="email" type="email" placeholder="seu@email.com" required />
         </UFormGroup>
 
-        <UFormGroup label="Password" name="password">
+        <UFormGroup label="Senha" name="password">
           <UInput v-model="password" type="password" required />
         </UFormGroup>
 
-        <UButton type="submit" block :loading="loading">Sign In</UButton>
+        <UButton type="submit" block :loading="loading">Entrar</UButton>
       </form>
 
       <div class="relative my-6">
@@ -22,7 +22,7 @@
           <span class="w-full border-t" />
         </div>
         <div class="relative flex justify-center text-sm">
-          <span class="px-2 bg-white dark:bg-gray-800 text-gray-500">Or continue with</span>
+          <span class="px-2 bg-white dark:bg-gray-800 text-gray-500">Ou continue com</span>
         </div>
       </div>
 
@@ -38,8 +38,8 @@
 
       <template #footer>
         <p class="text-sm text-center text-gray-500">
-          Don't have an account?
-          <NuxtLink to="/register" class="text-primary-600 hover:underline">Sign up</NuxtLink>
+          Não tem uma conta?
+          <NuxtLink to="/register" class="text-primary-600 hover:underline">Cadastre-se</NuxtLink>
         </p>
       </template>
     </UCard>
@@ -70,7 +70,7 @@ const handleLogin = async () => {
       password: password.value,
     })
     if (error) throw error
-    toast.add({ title: 'Success', description: 'Logged in successfully', color: 'green' })
+    toast.add({ title: 'Sucesso', description: 'Login realizado com sucesso', color: 'green' })
     navigateTo('/dashboard')
   } catch (error: any) {
     toast.add({ title: 'Error', description: error.message, color: 'red' })

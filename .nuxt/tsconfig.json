@@ -128,7 +128,7 @@
         "./tailwind/expose/*"
       ],
       "#app-manifest": [
-        "./manifest/meta/c6c3c3cc-4984-4045-929a-923a355a3d28"
+        "./manifest/meta/dev"
       ],
       "#components": [
         "./components"
@@ -181,6 +181,6 @@
     "../.data",
     "../node_modules/runtime/server",
     "../node_modules/dist/runtime/server",
-    "../.output"
+    "dev"
   ]
 }

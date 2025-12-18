@@ -2,20 +2,20 @@
   <div class="max-w-3xl mx-auto p-4">
     <div class="flex items-center gap-4 mb-6">
       <UButton icon="i-heroicons-arrow-left" variant="ghost" to="/dashboard" />
-      <h1 class="text-2xl font-bold">Create New Collection</h1>
+      <h1 class="text-2xl font-bold">Criar Nova Coleção</h1>
     </div>
 
     <form @submit.prevent="saveCollection">
       <UCard class="mb-6">
         <template #header>
-          <h2 class="font-semibold">Basic Details</h2>
+          <h2 class="font-semibold">Detalhes Básicos</h2>
         </template>
         <div class="space-y-4">
-          <UFormGroup label="Collection Name" required>
-            <UInput v-model="form.name" placeholder="e.g. Vintage Vinyls" required />
+          <UFormGroup label="Nome da Coleção" required>
+            <UInput v-model="form.name" placeholder="ex. Discos de Vinil" required />
           </UFormGroup>
-          <UFormGroup label="Description">
-            <UTextarea v-model="form.description" placeholder="A collection of my rare vinyl records..." />
+          <UFormGroup label="Descrição">
+            <UTextarea v-model="form.description" placeholder="Uma coleção dos meus discos raros..." />
           </UFormGroup>
         </div>
       </UCard>
@@ -28,12 +28,12 @@
           class="flex justify-between items-center mb-4 sticky top-0 z-10 py-4 transition-all duration-300 dark:bg-transparent"
           :class="[isSticky ? 'backdrop-blur-md border-b border-gray-200 dark:border-gray-800' : 'border-transparent']"
         >
-          <h2 class="text-lg font-semibold">Custom Fields</h2>
-          <UButton size="sm" icon="i-heroicons-plus" @click="addField">Add Field</UButton>
+          <h2 class="text-lg font-semibold">Campos Personalizados</h2>
+          <UButton size="sm" icon="i-heroicons-plus" @click="addField">Adicionar Campo</UButton>
         </div>
 
         <div v-if="form.fields.length === 0" class="text-center py-8 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
-          <p class="text-gray-500">No fields defined. Add fields to structure your collection.</p>
+          <p class="text-gray-500">Nenhum campo definido. Adicione campos para estruturar sua coleção.</p>
         </div>
 
         <div class="space-y-4">
@@ -47,8 +47,8 @@
       </div>
 
       <div class="flex justify-end gap-3">
-        <UButton to="/dashboard" color="gray" variant="ghost">Cancel</UButton>
-        <UButton type="submit" :loading="loading">Create Collection</UButton>
+        <UButton to="/dashboard" color="gray" variant="ghost">Cancelar</UButton>
+        <UButton type="submit" :loading="loading">Criar Coleção</UButton>
       </div>
     </form>
   </div>
@@ -85,7 +85,7 @@ const removeField = (index: number) => {
 
 const saveCollection = async () => {
   if (!user.value) return
-  if (form.fields.length === 0 && !confirm('Create collection without any custom fields?')) return
+  if (form.fields.length === 0 && !confirm('Criar coleção sem nenhum campo personalizado?')) return
 
   try {
     loading.value = true
@@ -123,11 +123,11 @@ const saveCollection = async () => {
       if (fieldsError) throw fieldsError // Ideally rollback collection here but keeping it simple
     }
 
-    toast.add({ title: 'Success', description: 'Collection created successfully', color: 'green' })
+    toast.add({ title: 'Sucesso', description: 'Coleção criada com sucesso', color: 'green' })
     navigateTo('/dashboard')
 
   } catch (error: any) {
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
   } finally {
     loading.value = false
   }

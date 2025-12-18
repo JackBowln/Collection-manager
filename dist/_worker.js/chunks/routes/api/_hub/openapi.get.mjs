@@ -1,0 +1,2 @@
+import{e as o,u as t,c as s}from"../../../nitro/nitro.mjs";import{r as a}from"../../../_/auth.mjs";import"node:process";import"node:async_hooks";const e=o(async o=>{await a(o);if(!t().hub.openapi)throw s({statusCode:422,message:"OpenAPI not configured"});const e=await import("../../../_/openapi.mjs").then(o=>o.default).catch(()=>{});if("function"!=typeof e)throw s({statusCode:404,message:"not found"});return e(o)});export{e as default};
+//# sourceMappingURL=openapi.get.mjs.map

@@ -57,8 +57,8 @@
     </div>
 
     <div class="mt-6 flex justify-end gap-3">
-      <UButton color="gray" variant="ghost" @click="$emit('cancel')">Cancel</UButton>
-      <UButton type="submit" :loading="loading">Save Item</UButton>
+      <UButton color="gray" variant="ghost" @click="$emit('cancel')">Cancelar</UButton>
+      <UButton type="submit" :loading="loading">Salvar Item</UButton>
     </div>
   </form>
 </template>

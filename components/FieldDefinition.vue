@@ -5,40 +5,40 @@
          <div class="flex items-center gap-2">
            <UCheckbox v-model="field.selected" />
            <UIcon name="i-heroicons-bars-3" class="cursor-move text-gray-400" />
-           <span class="font-medium text-sm">Field Definition</span>
+           <span class="font-medium text-sm">Definição do Campo</span>
          </div>
          <UButton color="red" variant="ghost" icon="i-heroicons-trash" size="xs" @click="$emit('remove')" />
       </div>
     </template>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <UFormGroup label="Field Name" required>
-        <UInput v-model="field.name" placeholder="e.g. Release Year" />
+      <UFormGroup label="Nome do Campo" required>
+        <UInput v-model="field.name" placeholder="ex. Ano de Lançamento" />
       </UFormGroup>
 
-      <UFormGroup label="Field Type" required>
+      <UFormGroup label="Tipo do Campo" required>
         <USelect v-model="field.type" :options="typeOptions" />
       </UFormGroup>
 
       <UFormGroup 
         v-if="['select', 'multiselect'].includes(field.type)" 
-        label="Options (comma separated)" 
+        label="Opções (separadas por vírgula)" 
         class="md:col-span-2"
         required
       >
         <UInput 
           v-model="optionsInput" 
-          placeholder="Option 1, Option 2, Option 3" 
+          placeholder="Opção 1, Opção 2, Opção 3" 
           @blur="updateOptions"
         />
         <template #help>
-          <span class="text-xs text-gray-500">Enter options separated by commas.</span>
+          <span class="text-xs text-gray-500">Digite as opções separadas por vírgula.</span>
         </template>
       </UFormGroup>
       
       <div class="flex items-center gap-4 mt-2">
-         <UCheckbox v-model="field.visible" label="Visible in Table" />
-         <UCheckbox v-model="field.required" label="Required" color="red" />
+         <UCheckbox v-model="field.visible" label="Visível na Tabela" />
+         <UCheckbox v-model="field.required" label="Obrigatório" color="red" />
       </div>
     </div>
   </UCard>
@@ -59,13 +59,13 @@ const field = computed({
 const optionsInput = ref(field.value.options ? field.value.options.join(', ') : '')
 
 const typeOptions = [
-  { label: 'Short Text', value: 'text' },
-  { label: 'Long Text', value: 'textarea' },
-  { label: 'Number', value: 'number' },
-  { label: 'Date', value: 'date' },
-  { label: 'Yes/No', value: 'boolean' },
-  { label: 'Select (Dropdown)', value: 'select' },
-  { label: 'Multi-Select', value: 'multiselect' }
+  { label: 'Texto Curto', value: 'text' },
+  { label: 'Texto Longo', value: 'textarea' },
+  { label: 'Número', value: 'number' },
+  { label: 'Data', value: 'date' },
+  { label: 'Sim/Não', value: 'boolean' },
+  { label: 'Seleção (Dropdown)', value: 'select' },
+  { label: 'Múltipla Seleção', value: 'multiselect' }
 ]
 
 const updateOptions = () => {
