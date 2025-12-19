@@ -1,6 +1,6 @@
 
       import { defaultExtractor as createDefaultExtractor } from "tailwindcss/lib/lib/defaultExtractor.js";
-      import { customSafelistExtractor, generateSafelist } from "/mnt/c/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/utils/colors";
+      import { customSafelistExtractor, generateSafelist } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/utils/colors";
       import formsPlugin from "@tailwindcss/forms";
       import aspectRatio from "@tailwindcss/aspect-ratio";
       import typography from "@tailwindcss/typography";
@@ -19,8 +19,8 @@
         ],
         content: {
           files: [
-            "/mnt/c/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/components/**/*.{vue,mjs,ts}",
-            "/mnt/c/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/ui.config/**/*.{mjs,js,ts}"
+            "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/components/**/*.{vue,mjs,ts}",
+            "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/ui/dist/runtime/ui.config/**/*.{mjs,js,ts}"
           ],
           transform: {
             vue: (content) => {

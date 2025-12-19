@@ -8,7 +8,6 @@ declare module "nitropack/types" {
     }
     '/api/_hub': {
       'head': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/base/server/api/_hub/index.head').default>>>>
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/cors.dev').default>>>>
     }
     '/api/_hub/manifest': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/base/server/api/_hub/manifest.get').default>>>>

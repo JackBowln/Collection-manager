@@ -21,8 +21,47 @@
         </UButton>
         <UButton variant="outline" icon="i-heroicons-arrow-up-tray" @click="isOpenImport = true">Importar Excel</UButton>
         <UButton icon="i-heroicons-plus" @click="openCreateModal">Novo Item</UButton>
+        <UTooltip text="Configurações e Campos">
+          <UButton 
+            icon="i-heroicons-cog-6-tooth" 
+            variant="ghost" 
+            color="gray" 
+            @click="isOpenSettings = true"
+          />
+        </UTooltip>
       </div>
     </div>
+
+    <!-- Stats Section Header -->
+    <div v-if="fields.length > 0 && items.length > 0" class="mb-4 flex items-center justify-between bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm p-2 rounded-lg border border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2 ml-2">
+         <div class="p-1 bg-primary-100 dark:bg-primary-900/40 rounded">
+            <UIcon name="i-heroicons-presentation-chart-line" class="w-4 h-4 text-primary-600 dark:text-primary-400" />
+         </div>
+         <h2 class="text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Resumo da Coleção</h2>
+      </div>
+      <UButton 
+        :icon="showStats ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" 
+        variant="ghost" 
+        color="gray" 
+        size="xs"
+        @click="toggleStats"
+      >
+        {{ showStats ? 'Ocultar Dashboards' : 'Mostrar Dashboards' }}
+      </UButton>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform -translate-y-4 opacity-0"
+      enter-to-class="transform translate-y-0 opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="transform translate-y-0 opacity-100"
+      leave-to-class="transform -translate-y-4 opacity-0"
+    >
+      <CollectionStats v-if="showStats" :fields="fields" :items="rows" />
+    </Transition>
 
     <!-- Filters/Search -->
     <div class="mb-4 flex flex-col md:flex-row gap-2">
@@ -96,7 +135,7 @@
       </UCard>
     </UModal>
     
-    <!-- Import Modal -->
+     <!-- Import Modal -->
     <UModal v-model="isOpenImport">
        <UCard>
          <template #header>Importar do Excel</template>
@@ -109,6 +148,13 @@
          />
        </UCard>
     </UModal>
+
+    <!-- Collection Settings Modal -->
+    <CollectionSettingsModal 
+      v-model="isOpenSettings" 
+      :collection-id="collectionId" 
+      @refresh="loadData"
+    />
 
     <!-- Comments -->
     <CommentSection :collection-id="collectionId" />
@@ -131,6 +177,13 @@ const selectedItems = ref<any[]>([])
 // Modal State
 const isOpen = ref(false)
 const isOpenImport = ref(false)
+const isOpenSettings = ref(false)
+const showStats = ref(true)
+
+const toggleStats = () => {
+  showStats.value = !showStats.value
+  localStorage.setItem('show-stats', String(showStats.value))
+}
 const editingItemId = ref<string | null>(null)
 const editingItemData = ref<any>({})
 const saving = ref(false)
@@ -162,10 +215,9 @@ const loadData = async () => {
     
     collection.value = colData
     // Sort fields by order
-    fields.value = (colData.fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order)
-
+    fields.value = ((colData as any).fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order)
+    
     // 2. Get Items & Values
-    // Note: Supabase doesn't easily return a pivot table. We fetch Items -> ItemValues
     const { data: itemData, error: itemError } = await supabase
       .from('items')
       .select(`id, created_at, item_values ( field_id, value )`)
@@ -184,6 +236,10 @@ const loadData = async () => {
 
 onMounted(() => {
   loadData()
+  const saved = localStorage.getItem('show-stats')
+  if (saved !== null) {
+    showStats.value = saved === 'true'
+  }
 })
 
 // Computed Table Rows (Pivot)
@@ -240,14 +296,55 @@ const tableColumns = computed(() => {
   ]
 })
 
+// Modal Actions
+const openCreateModal = () => {
+  editingItemId.value = null
+  editingItemData.value = {}
+  isOpen.value = true
+}
+
+const openEditModal = (row: any) => {
+  editingItemId.value = row.id
+  editingItemData.value = { ...row }
+  isOpen.value = true
+}
+
 // Actions
 // ...
 const handleSave = async (formData: any) => {
-// ...
-  try{
+  try {
+    saving.value = true
+    
+    // 1. Create/Update Item
+    const itemPayload = {
+      collection_id: collectionId,
+      id: editingItemId.value || undefined
+    }
+
+    const { data: item, error: itemError } = await (supabase
+      .from('items') as any)
+      .upsert(itemPayload)
+      .select()
+      .single()
+
+    if (itemError) throw itemError
+
+    // 2. Save Item Values
+    const valuesToUpsert = Object.entries(formData).map(([fieldId, value]) => ({
+      item_id: item.id,
+      field_id: fieldId,
+      value: value
+    }))
+
+    const { error: valuesError } = await (supabase
+      .from('item_values') as any)
+      .upsert(valuesToUpsert, { onConflict: 'item_id, field_id' })
+
+    if (valuesError) throw valuesError
+
     toast.add({ title: 'Sucesso', description: 'Item salvo', color: 'green' })
     isOpen.value = false
-    loadData() // Reload table
+    loadData()
 
   } catch (error: any) {
     toast.add({ title: 'Erro', description: error.message, color: 'red' })

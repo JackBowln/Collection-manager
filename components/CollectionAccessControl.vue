@@ -113,11 +113,11 @@ const addUser = async () => {
     }
 
     // 2. Add Share
-    const { error: shareError } = await supabase
-      .from('collection_shares')
+    const { error: shareError } = await (supabase
+      .from('collection_shares') as any)
       .insert({
         collection_id: props.collectionId,
-        user_id: users.id
+        user_id: (users as any).id
       })
     
     if (shareError) {

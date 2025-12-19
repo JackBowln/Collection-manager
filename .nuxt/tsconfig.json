@@ -104,7 +104,7 @@
         "../node_modules/@nuxt/ui/dist/runtime/*"
       ],
       "#ui-colors": [
-        "./ui.colors"
+        "./ui.colors.mjs"
       ],
       "#color-mode-options": [
         "./color-mode-options.mjs"
@@ -124,11 +124,8 @@
       "#tailwind-config": [
         "./tailwind/expose"
       ],
-      "#tailwind-config/*": [
-        "./tailwind/expose/*"
-      ],
       "#app-manifest": [
-        "./manifest/meta/dev"
+        "./manifest/meta/b247dfd0-2c9f-4e08-9314-69dfdc6948d0.json"
       ],
       "#components": [
         "./components"
@@ -180,7 +177,6 @@
     "../dist",
     "../.data",
     "../node_modules/runtime/server",
-    "../node_modules/dist/runtime/server",
-    "dev"
+    "../node_modules/dist/runtime/server"
   ]
 }

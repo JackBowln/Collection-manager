@@ -90,6 +90,8 @@ watch(() => props.fields, (newFields) => {
 }, { immediate: true, deep: true })
 
 const save = () => {
+  console.log("model",model);
+  
   emit('save', model)
 }
 </script>

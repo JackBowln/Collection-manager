@@ -1,1 +1,0 @@
-import{f as n,g as o,h as s,n as t,c as r,o as c}from"./Duz5UmER.js";const d=n({__name:"index",async setup(i){let e,a;return o().value?([e,a]=s(()=>t("/dashboard")),await e,a()):([e,a]=s(()=>t("/login")),await e,a()),(l,u)=>(c(),r("div",null,"Redirecting..."))}});export{d as default};

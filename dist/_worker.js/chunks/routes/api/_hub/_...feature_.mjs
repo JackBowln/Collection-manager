@@ -1,2 +1,2 @@
-import{e as o,c as s}from"../../../nitro/nitro.mjs";import{r as t}from"../../../_/features.mjs";import"node:process";import"node:async_hooks";const r=o(o=>{const[r]=(o.context.params?.feature||"").split("/");throw t(r),s({statusCode:404,message:"Not found"})});export{r as default};
+import{e as o,a as s}from"../../../_/nitro.mjs";import{r as t}from"../../../_/features.mjs";import"node:async_hooks";const a=o(o=>{const[a]=(o.context.params?.feature||"").split("/");throw t(a),s({statusCode:404,message:"Not found"})});export{a as default};
 //# sourceMappingURL=_...feature_.mjs.map

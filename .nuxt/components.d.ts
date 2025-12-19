@@ -15,6 +15,8 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 
 
 export const CollectionAccessControl: typeof import("../components/CollectionAccessControl.vue").default
+export const CollectionSettingsModal: typeof import("../components/CollectionSettingsModal.vue").default
+export const CollectionStats: typeof import("../components/CollectionStats.vue").default
 export const CommentSection: typeof import("../components/CommentSection.vue").default
 export const FieldDefinition: typeof import("../components/FieldDefinition.vue").default
 export const ImportWizard: typeof import("../components/ImportWizard.vue").default
@@ -94,6 +96,8 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components").Body
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island").default
 export const LazyCollectionAccessControl: LazyComponent<typeof import("../components/CollectionAccessControl.vue").default>
+export const LazyCollectionSettingsModal: LazyComponent<typeof import("../components/CollectionSettingsModal.vue").default>
+export const LazyCollectionStats: LazyComponent<typeof import("../components/CollectionStats.vue").default>
 export const LazyCommentSection: LazyComponent<typeof import("../components/CommentSection.vue").default>
 export const LazyFieldDefinition: LazyComponent<typeof import("../components/FieldDefinition.vue").default>
 export const LazyImportWizard: LazyComponent<typeof import("../components/ImportWizard.vue").default>
