@@ -1,0 +1,2 @@
+import{d as s,h as e,b as a}from"../../../_/nitro.mjs";import"node:async_hooks";const t=s(async s=>{const t=e();try{return await t.prepare("ALTER TABLE fields ADD COLUMN is_dynamic INTEGER DEFAULT 0").run(),{success:!0,message:"Column is_dynamic added"}}catch(s){if(s.message.includes("duplicate column"))return{success:!0,message:"Column already exists"};throw a({statusCode:500,message:s.message})}});export{t as default};
+//# sourceMappingURL=migrate-dynamic.mjs.map

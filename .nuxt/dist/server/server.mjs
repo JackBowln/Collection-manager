@@ -1,14 +1,13 @@
-import { hasInjectionContext, getCurrentInstance, shallowReactive, reactive, effectScope, getCurrentScope, inject, toRef, shallowRef, isReadonly, isRef, isShallow, isReactive, toRaw, defineAsyncComponent, ref, computed, defineComponent, unref, h, Suspense, nextTick, mergeProps, provide, Fragment, onServerPrefetch, createElementBlock, cloneVNode, toValue, useSSRContext, useAttrs, createVNode, resolveDynamicComponent, watch, resolveComponent, withCtx, renderSlot, createBlock, createCommentVNode, openBlock, toDisplayString, watchEffect, createSlots, renderList, onErrorCaptured, createApp } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/vue/index.mjs";
+import { hasInjectionContext, getCurrentInstance, shallowReactive, reactive, effectScope, getCurrentScope, inject, toRef, shallowRef, isReadonly, isRef, computed, isShallow, isReactive, toRaw, defineAsyncComponent, ref, defineComponent, unref, h, Suspense, nextTick, mergeProps, provide, Fragment, onServerPrefetch, createElementBlock, cloneVNode, toValue, useSSRContext, useAttrs, createVNode, resolveDynamicComponent, watch, resolveComponent, withCtx, renderSlot, createBlock, createCommentVNode, openBlock, toDisplayString, watchEffect, createSlots, renderList, onErrorCaptured, createApp } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/vue/index.mjs";
 import { $fetch as $fetch$1 } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/ofetch/dist/node.mjs";
 import { baseURL } from "#internal/nuxt/paths";
 import { createHooks } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/hookable/dist/index.mjs";
 import { getContext, executeAsync } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/unctx/dist/index.mjs";
-import { sanitizeStatusCode, createError as createError$1, setCookie, getHeader } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/h3/dist/index.mjs";
+import { sanitizeStatusCode, createError as createError$1, appendResponseHeader } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/h3/dist/index.mjs";
 import { START_LOCATION, createMemoryHistory, createRouter as createRouter$1, useRoute as useRoute$1, RouterView } from "vue-router";
 import { toRouteMatcher, createRouter } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/radix3/dist/index.mjs";
 import { defu, defuFn, createDefu } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/defu/dist/defu.mjs";
 import { hasProtocol, joinURL, withQuery, isScriptProtocol, parseQuery, withTrailingSlash, withoutTrailingSlash } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/ufo/dist/index.mjs";
-import { createServerClient, parseCookieHeader } from "@supabase/ssr";
 import { createSharedComposable, useTimestamp } from "@vueuse/core";
 import { extendTailwindMerge, twJoin } from "tailwind-merge";
 import { klona } from "C:/Users/viniv/Desktop/dev/collection-manager/node_modules/klona/dist/index.mjs";
@@ -29,6 +28,7 @@ if (!("global" in globalThis)) {
 const appLayoutTransition = false;
 const nuxtLinkDefaults = { "componentName": "NuxtLink" };
 const asyncDataDefaults = { "value": null, "errorValue": null, "deep": true };
+const fetchDefaults = {};
 const appId = "nuxt-app";
 function getNuxtAppCtx(id = appId) {
   return getContext(id, {
@@ -395,54 +395,54 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import("./_nuxt/index-BiilEdz9.js")
+    component: () => import("./_nuxt/index-D4WNvzb6.js")
   },
   {
     name: "login",
     path: "/login",
-    component: () => import("./_nuxt/login-B-mDz7Nt.js")
+    component: () => import("./_nuxt/login-ARuVEhcF.js")
   },
   {
     name: "confirm",
     path: "/confirm",
-    component: () => import("./_nuxt/confirm-CzSoQvOQ.js")
+    component: () => import("./_nuxt/confirm-JdrqzxmG.js")
   },
   {
     name: "explore",
     path: "/explore",
     meta: __nuxt_page_meta || {},
-    component: () => import("./_nuxt/explore-C_T4Dpaf.js")
+    component: () => import("./_nuxt/explore-zZF09PI1.js")
   },
   {
     name: "register",
     path: "/register",
-    component: () => import("./_nuxt/register-BG9iQAfh.js")
+    component: () => import("./_nuxt/register--cxVIvzB.js")
   },
   {
     name: "settings",
     path: "/settings",
-    component: () => import("./_nuxt/settings-CgBJUXgl.js")
+    component: () => import("./_nuxt/settings-BSTUnq93.js")
   },
   {
     name: "collections-new",
     path: "/collections/new",
-    component: () => import("./_nuxt/new-DXKibojk.js")
+    component: () => import("./_nuxt/new-CGVfmdwF.js")
   },
   {
     name: "dashboard",
     path: "/dashboard",
     meta: { "middleware": "auth" },
-    component: () => import("./_nuxt/index-Bt0ECUky.js")
+    component: () => import("./_nuxt/index-D2GCUBgu.js")
   },
   {
     name: "collections-id-edit",
     path: "/collections/:id()/edit",
-    component: () => import("./_nuxt/edit-Ci8NrslS.js")
+    component: () => import("./_nuxt/edit-CRUflC4B.js")
   },
   {
     name: "collections-id",
     path: "/collections/:id()",
-    component: () => import("./_nuxt/index-DFVr_KK7.js")
+    component: () => import("./_nuxt/index-bNRmuSwm.js")
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -563,7 +563,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import("./_nuxt/auth-tEpFfnLd.js")
+  auth: () => import("./_nuxt/auth-Bxq_Qd05.js")
 };
 const plugin = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -760,75 +760,27 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
     return { provide: { router } };
   }
 });
-async function fetchWithRetry(req, init) {
-  const retries = 3;
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      return await fetch(req, init);
-    } catch (error) {
-      if (init?.signal?.aborted) {
-        throw error;
-      }
-      if (attempt === retries) {
-        console.error(`Error fetching request ${req}`, error, init);
-        throw error;
-      }
-      console.warn(`Retrying fetch attempt ${attempt + 1} for request: ${req}`);
+function injectHead(nuxtApp) {
+  const nuxt = nuxtApp || tryUseNuxtApp();
+  return nuxt?.ssrContext?.head || nuxt?.runWithContext(() => {
+    if (hasInjectionContext()) {
+      return inject(headSymbol);
     }
-  }
-  throw new Error("Unreachable code");
+  });
 }
-function setCookies(event, cookies) {
-  const response = event.node.res;
-  const headersWritable = () => !response.headersSent && !response.writableEnded;
-  if (!headersWritable()) {
-    return;
-  }
-  for (const { name, value, options } of cookies) {
-    if (!headersWritable()) {
-      break;
-    }
-    setCookie(event, name, value, options);
+function useHead(input2, options = {}) {
+  const head = injectHead(options.nuxt);
+  if (head) {
+    return useHead$1(input2, { head, ...options });
   }
 }
-const serverSupabaseClient = async (event) => {
-  if (!event.context._supabaseClient) {
-    const { url, key, cookiePrefix, cookieOptions, clientOptions: { auth = {}, global = {} } } = (/* @__PURE__ */ useRuntimeConfig()).public.supabase;
-    event.context._supabaseClient = createServerClient(url, key, {
-      auth,
-      cookies: {
-        getAll: () => parseCookieHeader(getHeader(event, "Cookie") ?? ""),
-        setAll: (cookies) => setCookies(event, cookies)
-      },
-      cookieOptions: {
-        ...cookieOptions,
-        name: cookiePrefix
-      },
-      global: {
-        fetch: fetchWithRetry,
-        ...global
-      }
-    });
-  }
-  return event.context._supabaseClient;
-};
-const serverSupabaseUser = async (event) => {
-  const client = await serverSupabaseClient(event);
-  const { data: { user }, error } = await client.auth.getUser();
-  if (error) {
-    throw createError$1({ statusMessage: error?.message });
-  }
-  return user;
-};
-const serverSupabaseSession = async (event) => {
-  const client = await serverSupabaseClient(event);
-  const { data: { session }, error } = await client.auth.getSession();
-  if (error) {
-    throw createError$1({ statusMessage: error?.message });
-  }
-  delete session?.user;
-  return session;
-};
+function useRequestEvent(nuxtApp) {
+  nuxtApp ||= useNuxtApp();
+  return nuxtApp.ssrContext?.event;
+}
+function useRequestFetch() {
+  return useRequestEvent()?.$fetch || globalThis.$fetch;
+}
 const useStateKeyPrefix = "$s";
 function useState(...args) {
   const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
@@ -855,59 +807,71 @@ function useState(...args) {
   }
   return state;
 }
-const useSupabaseSession = () => useState("supabase_session", () => null);
-const useSupabaseUser = () => useState("supabase_user", () => null);
-function injectHead(nuxtApp) {
-  const nuxt = nuxtApp || tryUseNuxtApp();
-  return nuxt?.ssrContext?.head || nuxt?.runWithContext(() => {
-    if (hasInjectionContext()) {
-      return inject(headSymbol);
-    }
-  });
-}
-function useHead(input2, options = {}) {
-  const head = injectHead(options.nuxt);
-  if (head) {
-    return useHead$1(input2, { head, ...options });
-  }
-}
-function useRequestEvent(nuxtApp) {
-  nuxtApp ||= useNuxtApp();
-  return nuxtApp.ssrContext?.event;
-}
-const supabase_server_NZuw_NDm2ZtOgvg4QqXN_Xqdg_KPvGuBBWKrLH15GWY = /* @__PURE__ */ defineNuxtPlugin({
-  name: "supabase",
-  enforce: "pre",
-  async setup({ provide: provide2 }) {
-    let __temp, __restore;
-    const { url, key, cookiePrefix, useSsrCookies, cookieOptions, clientOptions } = (/* @__PURE__ */ useRuntimeConfig()).public.supabase;
-    const event = useRequestEvent();
-    const client = createServerClient(url, key, {
-      ...clientOptions,
-      cookies: {
-        getAll: () => parseCookieHeader(getHeader(event, "Cookie") ?? ""),
-        setAll: (cookies) => setCookies(event, cookies)
-      },
-      cookieOptions: {
-        ...cookieOptions,
-        name: cookiePrefix
-      },
-      global: {
-        fetch: fetchWithRetry,
-        ...clientOptions.global
+function useUserSession() {
+  const serverEvent = useRequestEvent();
+  const sessionState = useState("nuxt-session", () => null);
+  const authReadyState = useState("nuxt-auth-ready", () => false);
+  const clear = async () => {
+    await useRequestFetch()("/api/_auth/session", {
+      method: "DELETE",
+      onResponse({ response: { headers } }) {
+        if (serverEvent) {
+          for (const setCookie of headers.getSetCookie()) {
+            appendResponseHeader(serverEvent, "Set-Cookie", setCookie);
+          }
+        }
       }
     });
-    provide2("supabase", { client });
-    if (useSsrCookies) {
-      const [
-        session,
-        user
-      ] = ([__temp, __restore] = executeAsync(() => Promise.all([
-        serverSupabaseSession(event).catch(() => null),
-        serverSupabaseUser(event).catch(() => null)
-      ])), __temp = await __temp, __restore(), __temp);
-      useSupabaseSession().value = session;
-      useSupabaseUser().value = user;
+    sessionState.value = null;
+  };
+  const fetch = async () => {
+    sessionState.value = await useRequestFetch()("/api/_auth/session", {
+      headers: {
+        accept: "application/json"
+      },
+      retry: false
+    }).catch(() => null);
+    if (!authReadyState.value) {
+      authReadyState.value = true;
+    }
+  };
+  const popupListener = (e) => {
+    if (e.key === "temp-nuxt-auth-utils-popup") {
+      fetch();
+      (void 0).removeEventListener("storage", popupListener);
+    }
+  };
+  const openInPopup = (route, size = {}) => {
+    localStorage.setItem("temp-nuxt-auth-utils-popup", "true");
+    const width = size.width ?? 960;
+    const height = size.height ?? 600;
+    const top = ((void 0).top?.outerHeight ?? 0) / 2 + ((void 0).top?.screenY ?? 0) - height / 2;
+    const left = ((void 0).top?.outerWidth ?? 0) / 2 + ((void 0).top?.screenX ?? 0) - width / 2;
+    (void 0).open(
+      route,
+      "nuxt-auth-utils-popup",
+      `width=${width}, height=${height}, top=${top}, left=${left}, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no`
+    );
+    (void 0).addEventListener("storage", popupListener);
+  };
+  return {
+    ready: computed(() => authReadyState.value),
+    loggedIn: computed(() => Boolean(sessionState.value?.user)),
+    user: computed(() => sessionState.value?.user || null),
+    session: sessionState,
+    fetch,
+    openInPopup,
+    clear
+  };
+}
+const session_server_fi7D7q_WjeXZl2Hh05GOWPuIxZQWSnpY3ifY_sSGHJo = /* @__PURE__ */ defineNuxtPlugin({
+  name: "session-fetch-plugin",
+  enforce: "pre",
+  async setup(nuxtApp) {
+    let __temp, __restore;
+    nuxtApp.payload.isCached = Boolean(useRequestEvent()?.context.cache);
+    if (nuxtApp.payload.serverRendered && !nuxtApp.payload.prerenderedAt && !nuxtApp.payload.isCached && nuxtApp.$config.public.auth.loadStrategy !== "client-only") {
+      [__temp, __restore] = executeAsync(() => useUserSession().fetch()), await __temp, __restore();
     }
   }
 });
@@ -1581,7 +1545,7 @@ const plugin_MeUvTuoKUi51yb_kBguab6hdcExVXeTtZtTg9TZZBB8 = /* @__PURE__ */ defin
 const plugins = [
   unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU,
   plugin,
-  supabase_server_NZuw_NDm2ZtOgvg4QqXN_Xqdg_KPvGuBBWKrLH15GWY,
+  session_server_fi7D7q_WjeXZl2Hh05GOWPuIxZQWSnpY3ifY_sSGHJo,
   revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms,
   components_plugin_z4hgvsiddfKkfXTP6M8M4zG5Cb7sGnDhcryKVM45Di4,
   slideovers_g1RyjnFCC2XCqS3NLpv7yngCZ5AzjpmT7UJr_dW3BbY,
@@ -1591,7 +1555,7 @@ const plugins = [
   plugin_MeUvTuoKUi51yb_kBguab6hdcExVXeTtZtTg9TZZBB8
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import("./_nuxt/default-mnLjYMgW.js").then((m) => m.default || m))
+  default: defineAsyncComponent(() => import("./_nuxt/default-CVbxpkio.js").then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -4252,8 +4216,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import("./_nuxt/error-404-BMHDo2kl.js"));
-    const _Error = defineAsyncComponent(() => import("./_nuxt/error-500-DDvecyT1.js"));
+    const _Error404 = defineAsyncComponent(() => import("./_nuxt/error-404-g5clUFm7.js"));
+    const _Error = defineAsyncComponent(() => import("./_nuxt/error-500-RldKH9Wr.js"));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));
@@ -4334,36 +4298,37 @@ let entry;
 }
 const entry_default = (ssrContext) => entry(ssrContext);
 export {
-  getNuxtLinkProps as A,
-  dropdown as B,
-  useNuxtApp as C,
+  __nuxt_component_3 as A,
+  useState as B,
+  getNuxtLinkProps as C,
+  dropdown as D,
   _export_sfc as _,
   __nuxt_component_0$2 as a,
-  useSupabaseUser as b,
-  useToast as c,
-  __nuxt_component_2$1 as d,
+  useUserSession as b,
+  __nuxt_component_2$1 as c,
+  __nuxt_component_1 as d,
   entry_default as default,
-  __nuxt_component_1 as e,
-  useAsyncData as f,
-  __nuxt_component_5 as g,
-  useRoute as h,
-  arrow as i,
-  useUI as j,
-  appConfig as k,
-  get as l,
+  __nuxt_component_5 as e,
+  useToast as f,
+  useRoute as g,
+  arrow as h,
+  useUI as i,
+  appConfig as j,
+  get as k,
+  useInjectButtonGroup as l,
   mergeConfig as m,
   navigateTo as n,
-  useInjectButtonGroup as o,
-  twMerge as p,
-  selectMenu as q,
-  textarea as r,
+  twMerge as o,
+  selectMenu as p,
+  textarea as q,
+  looseToNumber as r,
   select as s,
   tooltip as t,
   useHead as u,
-  looseToNumber as v,
-  input as w,
-  defineNuxtRouteMiddleware as x,
-  __nuxt_component_3 as y,
-  useState as z
+  input as v,
+  fetchDefaults as w,
+  useAsyncData as x,
+  useRequestFetch as y,
+  defineNuxtRouteMiddleware as z
 };
 //# sourceMappingURL=server.mjs.map

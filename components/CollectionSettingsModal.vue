@@ -70,7 +70,6 @@ const isOpen = computed({
   set: (val) => emit('update:modelValue', val)
 })
 
-const supabase = useSupabaseClient()
 const toast = useToast()
 const loading = ref(false)
 
@@ -86,13 +85,7 @@ watch(isOpen, async (val) => {
   if (val) {
     loading.value = true
     try {
-      const { data, error } = await supabase
-        .from('collections')
-        .select(`*, fields (*)`)
-        .eq('id', props.collectionId)
-        .single()
-      
-      if (error) throw error
+      const data = await $fetch(`/api/collections/${props.collectionId}`)
       
       form.name = (data as any).name
       form.description = (data as any).description
@@ -124,8 +117,7 @@ const removeField = async (index: number) => {
     if (!confirm(`Excluir campo "${field.name}"? Todos os dados deste campo serão perdidos!`)) return
     
     try {
-        const { error } = await supabase.from('fields').delete().eq('id', field.id)
-        if (error) throw error
+        await $fetch(`/api/collections/${props.collectionId}/fields/${field.id}`, { method: 'DELETE' })
         toast.add({ title: 'Campo removido', color: 'green' })
     } catch (e: any) {
         toast.add({ title: 'Erro', description: e.message, color: 'red' })
@@ -138,36 +130,15 @@ const removeField = async (index: number) => {
 const saveChanges = async () => {
   loading.value = true
   try {
-    // 1. Update Collection
-    const { error: colError } = await (supabase
-      .from('collections') as any)
-      .update({ 
-        name: form.name, 
+    await $fetch(`/api/collections/${props.collectionId}`, {
+      method: 'PATCH',
+      body: {
+        name: form.name,
         description: form.description,
-        visibility: form.visibility 
-      })
-      .eq('id', props.collectionId)
-    
-    if (colError) throw colError
-
-    // 2. Process Fields (Upsert)
-    const fieldsPayload = form.fields.map((f, index) => ({
-      ...f,
-      collection_id: props.collectionId,
-      folder_order: index,
-      // Clear ID if it was a temp one (though we don't use temp IDs here)
-      id: f.id || undefined
-    }))
-
-    // Note: Upsert works fine here as long as we don't send id: null
-    // We filter out deleted fields already (handled in removeField)
-    if (fieldsPayload.length > 0) {
-        const { error: fieldsError } = await (supabase
-            .from('fields') as any)
-            .upsert(fieldsPayload)
-        
-        if (fieldsError) throw fieldsError
-    }
+        visibility: form.visibility,
+        fields: form.fields.map((f, index) => ({ ...f, folder_order: index }))
+      }
+    })
 
     toast.add({ title: 'Sucesso', description: 'Configurações atualizadas', color: 'green' })
     emit('refresh')

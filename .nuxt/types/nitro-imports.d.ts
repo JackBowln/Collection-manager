@@ -13,6 +13,7 @@ declare global {
   const callNodeListener: typeof import('../../node_modules/h3').callNodeListener
   const clearResponseHeaders: typeof import('../../node_modules/h3').clearResponseHeaders
   const clearSession: typeof import('../../node_modules/h3').clearSession
+  const clearUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').clearUserSession
   const createApp: typeof import('../../node_modules/h3').createApp
   const createAppEventHandler: typeof import('../../node_modules/h3').createAppEventHandler
   const createError: typeof import('../../node_modules/h3').createError
@@ -29,6 +30,50 @@ declare global {
   const defineNitroPlugin: typeof import('../../node_modules/nitropack/dist/runtime/internal/plugin').defineNitroPlugin
   const defineNodeListener: typeof import('../../node_modules/h3').defineNodeListener
   const defineNodeMiddleware: typeof import('../../node_modules/h3').defineNodeMiddleware
+  const defineOAuthAppleEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple').defineOAuthAppleEventHandler
+  const defineOAuthAtlassianEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian').defineOAuthAtlassianEventHandler
+  const defineOAuthAuth0EventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0').defineOAuthAuth0EventHandler
+  const defineOAuthAuthentikEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/authentik').defineOAuthAuthentikEventHandler
+  const defineOAuthAzureB2CEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/azureb2c').defineOAuthAzureB2CEventHandler
+  const defineOAuthBattledotnetEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/battledotnet').defineOAuthBattledotnetEventHandler
+  const defineOAuthCognitoEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/cognito').defineOAuthCognitoEventHandler
+  const defineOAuthDiscordEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/discord').defineOAuthDiscordEventHandler
+  const defineOAuthDropboxEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/dropbox').defineOAuthDropboxEventHandler
+  const defineOAuthFacebookEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/facebook').defineOAuthFacebookEventHandler
+  const defineOAuthGitHubEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/github').defineOAuthGitHubEventHandler
+  const defineOAuthGitLabEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitlab').defineOAuthGitLabEventHandler
+  const defineOAuthGiteaEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitea').defineOAuthGiteaEventHandler
+  const defineOAuthGoogleEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/google').defineOAuthGoogleEventHandler
+  const defineOAuthHerokuEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/heroku').defineOAuthHerokuEventHandler
+  const defineOAuthHubspotEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/hubspot').defineOAuthHubspotEventHandler
+  const defineOAuthInstagramEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/instagram').defineOAuthInstagramEventHandler
+  const defineOAuthKeycloakEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/keycloak').defineOAuthKeycloakEventHandler
+  const defineOAuthKickEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/kick').defineOAuthKickEventHandler
+  const defineOAuthLineEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/line').defineOAuthLineEventHandler
+  const defineOAuthLinearEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linear').defineOAuthLinearEventHandler
+  const defineOAuthLinkedInEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linkedin').defineOAuthLinkedInEventHandler
+  const defineOAuthLiveChatEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/livechat').defineOAuthLiveChatEventHandler
+  const defineOAuthMicrosoftEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/microsoft').defineOAuthMicrosoftEventHandler
+  const defineOAuthOktaEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/okta').defineOAuthOktaEventHandler
+  const defineOAuthOryEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/ory').defineOAuthOryEventHandler
+  const defineOAuthPaypalEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/paypal').defineOAuthPaypalEventHandler
+  const defineOAuthPolarEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/polar').defineOAuthPolarEventHandler
+  const defineOAuthRobloxEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/roblox').defineOAuthRobloxEventHandler
+  const defineOAuthSalesforceEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/salesforce').defineOAuthSalesforceEventHandler
+  const defineOAuthSeznamEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/seznam').defineOAuthSeznamEventHandler
+  const defineOAuthShopifyCustomerEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/shopifyCustomer').defineOAuthShopifyCustomerEventHandler
+  const defineOAuthSlackEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/slack').defineOAuthSlackEventHandler
+  const defineOAuthSpotifyEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/spotify').defineOAuthSpotifyEventHandler
+  const defineOAuthSteamEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/steam').defineOAuthSteamEventHandler
+  const defineOAuthStravaEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/strava').defineOAuthStravaEventHandler
+  const defineOAuthTikTokEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/tiktok').defineOAuthTikTokEventHandler
+  const defineOAuthTwitchEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/twitch').defineOAuthTwitchEventHandler
+  const defineOAuthVKEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/vk').defineOAuthVKEventHandler
+  const defineOAuthWorkOSEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/workos').defineOAuthWorkOSEventHandler
+  const defineOAuthXEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/x').defineOAuthXEventHandler
+  const defineOAuthXSUAAEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/xsuaa').defineOAuthXSUAAEventHandler
+  const defineOAuthYandexEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/yandex').defineOAuthYandexEventHandler
+  const defineOAuthZitadelEventHandler: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/zitadel').defineOAuthZitadelEventHandler
   const defineRenderHandler: typeof import('../../node_modules/nitropack/dist/runtime/internal/renderer').defineRenderHandler
   const defineRequestMiddleware: typeof import('../../node_modules/h3').defineRequestMiddleware
   const defineResponseMiddleware: typeof import('../../node_modules/h3').defineResponseMiddleware
@@ -38,11 +83,13 @@ declare global {
   const defineWebSocketHandler: typeof import('../../node_modules/h3').defineWebSocketHandler
   const deleteCookie: typeof import('../../node_modules/h3').deleteCookie
   const dynamicEventHandler: typeof import('../../node_modules/h3').dynamicEventHandler
+  const ensureBlob: typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/utils/blob').ensureBlob
   const eventHandler: typeof import('../../node_modules/h3').eventHandler
   const fetchWithEvent: typeof import('../../node_modules/h3').fetchWithEvent
   const fromNodeMiddleware: typeof import('../../node_modules/h3').fromNodeMiddleware
   const fromPlainHandler: typeof import('../../node_modules/h3').fromPlainHandler
   const fromWebHandler: typeof import('../../node_modules/h3').fromWebHandler
+  const getAtprotoClientMetadata: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/atproto').getAtprotoClientMetadata
   const getCookie: typeof import('../../node_modules/h3').getCookie
   const getHeader: typeof import('../../node_modules/h3').getHeader
   const getHeaders: typeof import('../../node_modules/h3').getHeaders
@@ -66,11 +113,16 @@ declare global {
   const getRouterParam: typeof import('../../node_modules/h3').getRouterParam
   const getRouterParams: typeof import('../../node_modules/h3').getRouterParams
   const getSession: typeof import('../../node_modules/h3').getSession
+  const getUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').getUserSession
   const getValidatedQuery: typeof import('../../node_modules/h3').getValidatedQuery
   const getValidatedRouterParams: typeof import('../../node_modules/h3').getValidatedRouterParams
   const handleCacheHeaders: typeof import('../../node_modules/h3').handleCacheHeaders
   const handleCors: typeof import('../../node_modules/h3').handleCors
+  const hashPassword: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/password').hashPassword
+  const hubBlob: typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/utils/blob').hubBlob
+  const hubDatabase: typeof import('../../node_modules/@nuxthub/core/dist/runtime/database/server/utils/database').hubDatabase
   const hubHooks: typeof import('../../node_modules/@nuxthub/core/dist/runtime/base/server/utils/hooks').hubHooks
+  const hubKV: typeof import('../../node_modules/@nuxthub/core/dist/runtime/kv/server/utils/kv').hubKV
   const isCorsOriginAllowed: typeof import('../../node_modules/h3').isCorsOriginAllowed
   const isError: typeof import('../../node_modules/h3').isError
   const isEvent: typeof import('../../node_modules/h3').isEvent
@@ -83,7 +135,11 @@ declare global {
   const nitroPlugin: typeof import('../../node_modules/nitropack/dist/runtime/internal/plugin').nitroPlugin
   const onHubReady: typeof import('../../node_modules/@nuxthub/core/dist/runtime/base/server/utils/hooks').onHubReady
   const parseCookies: typeof import('../../node_modules/h3').parseCookies
+  const passwordNeedsReHash: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/password').passwordNeedsReHash
   const promisifyNodeListener: typeof import('../../node_modules/h3').promisifyNodeListener
+  const proxyHubBlob: typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/utils/blob').proxyHubBlob
+  const proxyHubDatabase: typeof import('../../node_modules/@nuxthub/core/dist/runtime/database/server/utils/database').proxyHubDatabase
+  const proxyHubKV: typeof import('../../node_modules/@nuxthub/core/dist/runtime/kv/server/utils/kv').proxyHubKV
   const proxyRequest: typeof import('../../node_modules/h3').proxyRequest
   const readBody: typeof import('../../node_modules/h3').readBody
   const readFormData: typeof import('../../node_modules/h3').readFormData
@@ -91,6 +147,8 @@ declare global {
   const readRawBody: typeof import('../../node_modules/h3').readRawBody
   const readValidatedBody: typeof import('../../node_modules/h3').readValidatedBody
   const removeResponseHeader: typeof import('../../node_modules/h3').removeResponseHeader
+  const replaceUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').replaceUserSession
+  const requireUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').requireUserSession
   const runTask: typeof import('../../node_modules/nitropack/dist/runtime/internal/task').runTask
   const sanitizeStatusCode: typeof import('../../node_modules/h3').sanitizeStatusCode
   const sanitizeStatusMessage: typeof import('../../node_modules/h3').sanitizeStatusMessage
@@ -104,12 +162,14 @@ declare global {
   const sendStream: typeof import('../../node_modules/h3').sendStream
   const sendWebResponse: typeof import('../../node_modules/h3').sendWebResponse
   const serveStatic: typeof import('../../node_modules/h3').serveStatic
+  const sessionHooks: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').sessionHooks
   const setCookie: typeof import('../../node_modules/h3').setCookie
   const setHeader: typeof import('../../node_modules/h3').setHeader
   const setHeaders: typeof import('../../node_modules/h3').setHeaders
   const setResponseHeader: typeof import('../../node_modules/h3').setResponseHeader
   const setResponseHeaders: typeof import('../../node_modules/h3').setResponseHeaders
   const setResponseStatus: typeof import('../../node_modules/h3').setResponseStatus
+  const setUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session').setUserSession
   const splitCookiesString: typeof import('../../node_modules/h3').splitCookiesString
   const toEventHandler: typeof import('../../node_modules/h3').toEventHandler
   const toNodeListener: typeof import('../../node_modules/h3').toNodeListener
@@ -125,6 +185,7 @@ declare global {
   const useRuntimeConfig: typeof import('../../node_modules/nitropack/dist/runtime/internal/config').useRuntimeConfig
   const useSession: typeof import('../../node_modules/h3').useSession
   const useStorage: typeof import('../../node_modules/nitropack/dist/runtime/internal/storage').useStorage
+  const verifyPassword: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/password').verifyPassword
   const writeEarlyHints: typeof import('../../node_modules/h3').writeEarlyHints
 }
 // for type re-export
@@ -132,6 +193,141 @@ declare global {
   // @ts-ignore
   export type { HubHooks } from '../../node_modules/@nuxthub/core/dist/runtime/base/server/utils/hooks.d'
   import('../../node_modules/@nuxthub/core/dist/runtime/base/server/utils/hooks.d')
+  // @ts-ignore
+  export type { OAuthAppleConfig, OAuthAppleTokens, OAuthAppleUser } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple.d')
+  // @ts-ignore
+  export type { OAuthAtlassianConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian.d')
+  // @ts-ignore
+  export type { OAuthAuth0Config } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0.d')
+  // @ts-ignore
+  export type { OAuthAuthentikConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/authentik.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/authentik.d')
+  // @ts-ignore
+  export type { OAuthAzureB2CConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/azureb2c.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/azureb2c.d')
+  // @ts-ignore
+  export type { OAuthBattledotnetConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/battledotnet.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/battledotnet.d')
+  // @ts-ignore
+  export type { OAuthCognitoConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/cognito.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/cognito.d')
+  // @ts-ignore
+  export type { OAuthDiscordConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/discord.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/discord.d')
+  // @ts-ignore
+  export type { OAuthDropboxConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/dropbox.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/dropbox.d')
+  // @ts-ignore
+  export type { OAuthFacebookConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/facebook.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/facebook.d')
+  // @ts-ignore
+  export type { OAuthGiteaConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitea.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitea.d')
+  // @ts-ignore
+  export type { OAuthGitHubConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/github.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/github.d')
+  // @ts-ignore
+  export type { OAuthGitLabConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitlab.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitlab.d')
+  // @ts-ignore
+  export type { OAuthGoogleConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/google.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/google.d')
+  // @ts-ignore
+  export type { OAuthHerokuConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/heroku.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/heroku.d')
+  // @ts-ignore
+  export type { OAuthHubspotConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/hubspot.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/hubspot.d')
+  // @ts-ignore
+  export type { OAuthInstagramConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/instagram.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/instagram.d')
+  // @ts-ignore
+  export type { OAuthKeycloakConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/keycloak.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/keycloak.d')
+  // @ts-ignore
+  export type { OAuthKickConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/kick.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/kick.d')
+  // @ts-ignore
+  export type { OAuthLineConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/line.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/line.d')
+  // @ts-ignore
+  export type { OAuthLinearConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linear.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linear.d')
+  // @ts-ignore
+  export type { OAuthLinkedInConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linkedin.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linkedin.d')
+  // @ts-ignore
+  export type { LiveChatTokens, LiveChatUser, LiveChatConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/livechat.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/livechat.d')
+  // @ts-ignore
+  export type { OAuthMicrosoftConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/microsoft.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/microsoft.d')
+  // @ts-ignore
+  export type { OpenIdConfig, OAuthConfigExt, OAuthOktaConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/okta.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/okta.d')
+  // @ts-ignore
+  export type { OAuthOryConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/ory.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/ory.d')
+  // @ts-ignore
+  export type { OAuthPaypalConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/paypal.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/paypal.d')
+  // @ts-ignore
+  export type { OAuthPolarConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/polar.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/polar.d')
+  // @ts-ignore
+  export type { OAuthRobloxConfig, OAuthRobloxUser } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/roblox.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/roblox.d')
+  // @ts-ignore
+  export type { OAuthSalesforceConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/salesforce.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/salesforce.d')
+  // @ts-ignore
+  export type { OAuthSeznamConfig, OAuthSeznamUser } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/seznam.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/seznam.d')
+  // @ts-ignore
+  export type { OAuthShopifyCustomerConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/shopifyCustomer.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/shopifyCustomer.d')
+  // @ts-ignore
+  export type { OAuthSlackConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/slack.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/slack.d')
+  // @ts-ignore
+  export type { OAuthSpotifyConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/spotify.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/spotify.d')
+  // @ts-ignore
+  export type { OAuthSteamConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/steam.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/steam.d')
+  // @ts-ignore
+  export type { OAuthStravaConfig, OAuthStravaUser, OAuthStravaTokens } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/strava.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/strava.d')
+  // @ts-ignore
+  export type { OAuthTikTokConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/tiktok.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/tiktok.d')
+  // @ts-ignore
+  export type { OAuthTwitchConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/twitch.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/twitch.d')
+  // @ts-ignore
+  export type { OAuthVKConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/vk.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/vk.d')
+  // @ts-ignore
+  export type { OAuthWorkOSConfig, OAuthWorkOSUser, OAuthWorkOSAuthenticationMethod, OAuthWorkOSAuthenticateResponse, OAuthWorkOSTokens } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/workos.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/workos.d')
+  // @ts-ignore
+  export type { OAuthXConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/x.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/x.d')
+  // @ts-ignore
+  export type { OAuthXSUAAConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/xsuaa.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/xsuaa.d')
+  // @ts-ignore
+  export type { OAuthYandexConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/yandex.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/yandex.d')
+  // @ts-ignore
+  export type { OAuthZitadelConfig } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/zitadel.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/zitadel.d')
+  // @ts-ignore
+  export type { SessionHooks } from '../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session.d'
+  import('../../node_modules/nuxt-auth-utils/dist/runtime/server/utils/session.d')
 }
 export { useNitroApp } from 'nitropack/runtime/internal/app';
 export { useRuntimeConfig, useAppConfig } from 'nitropack/runtime/internal/config';
@@ -148,3 +344,53 @@ export { appendCorsHeaders, appendCorsPreflightHeaders, appendHeader, appendHead
 export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
 export { defineAppConfig } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
 export { hubHooks, onHubReady } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxthub/core/dist/runtime/base/server/utils/hooks';
+export { hubBlob, proxyHubBlob, ensureBlob } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxthub/core/dist/runtime/blob/server/utils/blob';
+export { hubDatabase, proxyHubDatabase } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxthub/core/dist/runtime/database/server/utils/database';
+export { hubKV, proxyHubKV } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/@nuxthub/core/dist/runtime/kv/server/utils/kv';
+export { defineOAuthAppleEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple';
+export { defineOAuthAtlassianEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian';
+export { defineOAuthAuth0EventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0';
+export { defineOAuthAuthentikEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/authentik';
+export { defineOAuthAzureB2CEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/azureb2c';
+export { defineOAuthBattledotnetEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/battledotnet';
+export { defineOAuthCognitoEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/cognito';
+export { defineOAuthDiscordEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/discord';
+export { defineOAuthDropboxEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/dropbox';
+export { defineOAuthFacebookEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/facebook';
+export { defineOAuthGiteaEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitea';
+export { defineOAuthGitHubEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/github';
+export { defineOAuthGitLabEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/gitlab';
+export { defineOAuthGoogleEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/google';
+export { defineOAuthHerokuEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/heroku';
+export { defineOAuthHubspotEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/hubspot';
+export { defineOAuthInstagramEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/instagram';
+export { defineOAuthKeycloakEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/keycloak';
+export { defineOAuthKickEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/kick';
+export { defineOAuthLineEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/line';
+export { defineOAuthLinearEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linear';
+export { defineOAuthLinkedInEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/linkedin';
+export { defineOAuthLiveChatEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/livechat';
+export { defineOAuthMicrosoftEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/microsoft';
+export { defineOAuthOktaEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/okta';
+export { defineOAuthOryEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/ory';
+export { defineOAuthPaypalEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/paypal';
+export { defineOAuthPolarEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/polar';
+export { defineOAuthRobloxEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/roblox';
+export { defineOAuthSalesforceEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/salesforce';
+export { defineOAuthSeznamEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/seznam';
+export { defineOAuthShopifyCustomerEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/shopifyCustomer';
+export { defineOAuthSlackEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/slack';
+export { defineOAuthSpotifyEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/spotify';
+export { defineOAuthSteamEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/steam';
+export { defineOAuthStravaEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/strava';
+export { defineOAuthTikTokEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/tiktok';
+export { defineOAuthTwitchEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/twitch';
+export { defineOAuthVKEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/vk';
+export { defineOAuthWorkOSEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/workos';
+export { defineOAuthXEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/x';
+export { defineOAuthXSUAAEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/xsuaa';
+export { defineOAuthYandexEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/yandex';
+export { defineOAuthZitadelEventHandler } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/zitadel';
+export { getAtprotoClientMetadata } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/utils/atproto';
+export { hashPassword, verifyPassword, passwordNeedsReHash } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/utils/password';
+export { sessionHooks, getUserSession, setUserSession, replaceUserSession, clearUserSession, requireUserSession } from 'C:/Users/viniv/Desktop/dev/collection-manager/node_modules/nuxt-auth-utils/dist/runtime/server/utils/session';

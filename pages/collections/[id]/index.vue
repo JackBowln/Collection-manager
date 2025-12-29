@@ -65,7 +65,17 @@
 
     <!-- Filters/Search -->
     <div class="mb-4 flex flex-col md:flex-row gap-2">
-      <UInput v-model="searchQuery" icon="i-heroicons-magnifying-glass" placeholder="Buscar em todas as colunas..." class="w-full md:w-64" />
+      <UInput 
+        v-model="searchQuery" 
+        icon="i-heroicons-magnifying-glass" 
+        placeholder="Buscar em todas as colunas..." 
+        class="w-full md:w-64" 
+        :ui="{ icon: { trailing: { pointer: '' } } }"
+      >
+        <template #trailing v-if="searchQuery || activeFiltersCount > 0">
+           <UBadge size="xs" color="gray" variant="soft">{{ filteredRows.length }}</UBadge>
+        </template>
+      </UInput>
       
       <UPopover>
         <UButton color="white" icon="i-heroicons-funnel" trailing-icon="i-heroicons-chevron-down">
@@ -129,6 +139,7 @@
           :fields="fields"
           :initial-data="editingItemData"
           :loading="saving"
+          :collection-id="collectionId"
           @save="handleSave"
           @cancel="isOpen = false"
         />
@@ -165,13 +176,11 @@
 <script setup lang="ts">
 const route = useRoute()
 const collectionId = route.params.id as string
-const supabase = useSupabaseClient()
 const toast = useToast()
 
 const collection = ref<any>(null)
 const fields = ref<any[]>([])
 const items = ref<any[]>([])
-const pending = ref(true)
 const selectedItems = ref<any[]>([])
 
 // Modal State
@@ -201,41 +210,27 @@ const clearFilters = () => {
 }
 
 // Load Data
-const loadData = async () => {
-  pending.value = true
-  try {
-    // 1. Get Collection & Fields
-    const { data: colData, error: colError } = await supabase
-      .from('collections')
-      .select(`*, fields (*)`)
-      .eq('id', collectionId)
-      .single()
-    
-    if (colError) throw colError
-    
-    collection.value = colData
-    // Sort fields by order
-    fields.value = ((colData as any).fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order)
-    
-    // 2. Get Items & Values
-    const { data: itemData, error: itemError } = await supabase
-      .from('items')
-      .select(`id, created_at, item_values ( field_id, value )`)
-      .eq('collection_id', collectionId)
-      .order('created_at', { ascending: false })
+const { data: collectionData, pending: pendingCollection, refresh: refreshCollection } = await useFetch(`/api/collections/${collectionId}`)
+const { data: itemsData, pending: pendingItems, refresh: refreshItems } = await useFetch(`/api/collections/${collectionId}/items`)
 
-    if (itemError) throw itemError
-    items.value = itemData || []
-
-  } catch (error: any) {
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
-  } finally {
-    pending.value = false
+watchEffect(() => {
+  if (collectionData.value) {
+    collection.value = collectionData.value
+    fields.value = ((collectionData.value as any).fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order)
   }
+  if (itemsData.value) {
+    items.value = (itemsData.value as any)
+  }
+})
+
+const pending = computed(() => pendingCollection.value || pendingItems.value)
+
+const loadData = () => {
+  refreshCollection()
+  refreshItems()
 }
 
 onMounted(() => {
-  loadData()
   const saved = localStorage.getItem('show-stats')
   if (saved !== null) {
     showStats.value = saved === 'true'
@@ -243,15 +238,8 @@ onMounted(() => {
 })
 
 // Computed Table Rows (Pivot)
-const rows = computed(() => {
-  return items.value.map(item => {
-    const row: any = { id: item.id, created_at: item.created_at }
-    item.item_values.forEach((iv: any) => {
-      row[iv.field_id] = iv.value
-    })
-    return row
-  })
-})
+// items.value is already pivoted from the API
+const rows = computed(() => items.value)
 
 const filteredRows = computed(() => {
   let result = rows.value
@@ -310,37 +298,17 @@ const openEditModal = (row: any) => {
 }
 
 // Actions
-// ...
 const handleSave = async (formData: any) => {
   try {
     saving.value = true
     
-    // 1. Create/Update Item
-    const itemPayload = {
-      collection_id: collectionId,
-      id: editingItemId.value || undefined
-    }
-
-    const { data: item, error: itemError } = await (supabase
-      .from('items') as any)
-      .upsert(itemPayload)
-      .select()
-      .single()
-
-    if (itemError) throw itemError
-
-    // 2. Save Item Values
-    const valuesToUpsert = Object.entries(formData).map(([fieldId, value]) => ({
-      item_id: item.id,
-      field_id: fieldId,
-      value: value
-    }))
-
-    const { error: valuesError } = await (supabase
-      .from('item_values') as any)
-      .upsert(valuesToUpsert, { onConflict: 'item_id, field_id' })
-
-    if (valuesError) throw valuesError
+    await $fetch(`/api/collections/${collectionId}/items`, {
+      method: 'POST',
+      body: {
+        id: editingItemId.value,
+        values: formData
+      }
+    })
 
     toast.add({ title: 'Sucesso', description: 'Item salvo', color: 'green' })
     isOpen.value = false
@@ -355,12 +323,12 @@ const handleSave = async (formData: any) => {
 
 const deleteItem = async (id: string) => {
   if (!confirm('Excluir item?')) return
-  const { error } = await supabase.from('items').delete().eq('id', id)
-  if (error) {
-    toast.add({ title: 'Erro', description: error.message, color: 'red' })
-  } else {
+  try {
+    await $fetch(`/api/collections/${collectionId}/items/${id}`, { method: 'DELETE' })
     toast.add({ title: 'Excluído', color: 'green' })
-    items.value = items.value.filter(i => i.id !== id)
+    loadData()
+  } catch (e: any) {
+    toast.add({ title: 'Erro', description: e.message, color: 'red' })
   }
 }
 
@@ -371,17 +339,15 @@ const deleteSelectedItems = async () => {
 
   const ids = selectedItems.value.map(i => i.id)
   
-  const { error } = await supabase
-    .from('items')
-    .delete()
-    .in('id', ids)
-
-  if (error) {
-    toast.add({ title: 'Erro', description: error.message, color: 'red' })
-  } else {
+  try {
+    // We could make a bulk delete API or call multiple deletes
+    // For now, let's assume we have a bulk endpoint or just call in a loop (not ideal but works)
+    await Promise.all(ids.map(id => $fetch(`/api/collections/${collectionId}/items/${id}`, { method: 'DELETE' })))
     toast.add({ title: 'Excluído', description: `${count} itens excluídos`, color: 'green' })
-    items.value = items.value.filter(i => !ids.includes(i.id))
     selectedItems.value = []
+    loadData()
+  } catch (e: any) {
+    toast.add({ title: 'Erro', description: e.message, color: 'red' })
   }
 }
 </script>

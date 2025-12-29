@@ -20,21 +20,31 @@
         <USelect v-model="field.type" :options="typeOptions" />
       </UFormGroup>
 
-      <UFormGroup 
-        v-if="['select', 'multiselect'].includes(field.type)" 
-        label="Opções (separadas por vírgula)" 
-        class="md:col-span-2"
-        required
+      <div 
+        v-if="['select', 'multiselect'].includes(field.type)"
+        class="md:col-span-2 space-y-3"
       >
-        <UInput 
-          v-model="optionsInput" 
-          placeholder="Opção 1, Opção 2, Opção 3" 
-          @blur="updateOptions"
+        <UCheckbox 
+          v-model="field.is_dynamic" 
+          label="Preencher opções automaticamente com valores existentes no banco" 
+          help="Se marcado, as opções serão carregadas dos itens já cadastrados nesta coleção."
         />
-        <template #help>
-          <span class="text-xs text-gray-500">Digite as opções separadas por vírgula.</span>
-        </template>
-      </UFormGroup>
+
+        <UFormGroup 
+          v-if="!field.is_dynamic"
+          label="Opções (separadas por vírgula)" 
+          required
+        >
+          <UInput 
+            v-model="optionsInput" 
+            placeholder="Opção 1, Opção 2, Opção 3" 
+            @blur="updateOptions"
+          />
+          <template #help>
+            <span class="text-xs text-gray-500">Digite as opções separadas por vírgula.</span>
+          </template>
+        </UFormGroup>
+      </div>
       
       <div class="flex items-center gap-4 mt-2">
          <UCheckbox v-model="field.visible" label="Visível na Tabela" />
@@ -56,7 +66,7 @@ const field = computed({
   set: (val) => emit('update:modelValue', val)
 })
 
-const optionsInput = ref(field.value.options ? field.value.options.join(', ') : '')
+const optionsInput = ref(Array.isArray(field.value.options) ? field.value.options.join(', ') : '')
 
 const typeOptions = [
   { label: 'Texto Curto', value: 'text' },
@@ -79,6 +89,7 @@ const updateOptions = () => {
 watch(() => field.value.type, (newType) => {
   if (!['select', 'multiselect'].includes(newType)) {
     field.value.options = null
+    field.value.is_dynamic = false
     optionsInput.value = ''
   }
 })

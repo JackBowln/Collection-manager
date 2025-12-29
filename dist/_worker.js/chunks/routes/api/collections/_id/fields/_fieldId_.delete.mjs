@@ -1,0 +1,2 @@
+import{d as s,e as i,g as e,h as a,b as d}from"../../../../../_/nitro.mjs";import"node:async_hooks";const r=s(async s=>{const{user:r}=await i(s),o=e(s,"id"),t=e(s,"fieldId"),n=a(),c=await n.prepare("SELECT user_id FROM collections WHERE id = ?").bind(o).first();if(!c||c.user_id!==r.id)throw d({statusCode:403,message:"Forbidden"});return await n.prepare("DELETE FROM fields WHERE id = ? AND collection_id = ?").bind(t,o).run(),{success:!0}});export{r as default};
+//# sourceMappingURL=_fieldId_.delete.mjs.map

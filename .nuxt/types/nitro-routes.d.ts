@@ -3,6 +3,63 @@ import type { Serialize, Simplify } from "nitropack/types";
 declare module "nitropack/types" {
   type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
   interface InternalApi {
+    '/api/admin/init-db': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/init-db').default>>>>
+    }
+    '/api/admin/migrate-dynamic': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/admin/migrate-dynamic').default>>>>
+    }
+    '/api/auth/github': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/github.get').default>>>>
+    }
+    '/api/auth/google': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/google.get').default>>>>
+    }
+    '/api/collections': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections').default>>>>
+    }
+    '/api/collections/:id': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]').default>>>>
+    }
+    '/api/collections/:id/comments': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/comments').default>>>>
+    }
+    '/api/collections/:id/fields/:fieldId': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/fields/[fieldId].delete').default>>>>
+    }
+    '/api/collections/:id/fields/:fieldId/values': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/fields/[fieldId]/values.get').default>>>>
+    }
+    '/api/collections/:id/import': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/import').default>>>>
+    }
+    '/api/collections/:id/items': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/items').default>>>>
+    }
+    '/api/collections/:id/items/:itemId': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/items/[itemId].delete').default>>>>
+    }
+    '/api/collections/:id/shares': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/shares').default>>>>
+    }
+    '/api/collections/:id/shares/:shareId': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/collections/[id]/shares/[shareId].delete').default>>>>
+    }
+    '/api/debug/user': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/debug/user').default>>>>
+    }
+    '/api/debug/values/:id/:fieldId': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/debug/values/[id]/[fieldId]').default>>>>
+    }
+    '/api/explore': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/explore.get').default>>>>
+    }
+    '/api/user/avatar': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/avatar.post').default>>>>
+    }
+    '/api/user/profile': {
+      'patch': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/profile.patch').default>>>>
+    }
     '/api/_hub/**:feature': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/base/server/api/_hub/[...feature]').default>>>>
     }
@@ -15,6 +72,49 @@ declare module "nitropack/types" {
     '/api/_hub/openapi': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/openapi/server/api/_hub/openapi.get').default>>>>
     }
+    '/api/_hub/blob/**:pathname': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/[...pathname].delete').default>>>>
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/[...pathname].get').default>>>>
+      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/[...pathname].put').default>>>>
+    }
+    '/api/_hub/blob/credentials': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/credentials.post').default>>>>
+    }
+    '/api/_hub/blob/delete-folder': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/delete-folder.post').default>>>>
+    }
+    '/api/_hub/blob/delete': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/delete.post').default>>>>
+    }
+    '/api/_hub/blob/head/**:pathname': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/head/[...pathname].get').default>>>>
+    }
+    '/api/_hub/blob': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/index.get').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/index.post').default>>>>
+    }
+    '/api/_hub/blob/multipart/:action/**:pathname': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/server/api/_hub/blob/multipart/[action]/[...pathname]').default>>>>
+    }
+    '/api/_hub/database/:command': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/database/server/api/_hub/database/[command].post').default>>>>
+    }
+    '/api/_hub/database/query': {
+      'options': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/database/server/api/_hub/database/query.options').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/database/server/api/_hub/database/query.post').default>>>>
+    }
+    '/api/_hub/kv/**:path': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxthub/core/dist/runtime/kv/server/api/_hub/kv/[...path]').default>>>>
+    }
+    '/auth/debug': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/routes/auth/debug.get').default>>>>
+    }
+    '/auth/github': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/routes/auth/github.get').default>>>>
+    }
+    '/auth/google': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/routes/auth/google.get').default>>>>
+    }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
     }
@@ -23,6 +123,10 @@ declare module "nitropack/types" {
     }
     '/api/_nuxt_icon/:collection': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/icon/dist/runtime/server/api').default>>>>
+    }
+    '/api/_auth/session': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/api/session.delete').default>>>>
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/server/api/session.get').default>>>>
     }
   }
 }

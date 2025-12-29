@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-const user = useSupabaseUser()
+const { loggedIn } = useUserSession()
 
-if (user.value) {
+if (loggedIn.value) {
   await navigateTo('/dashboard')
 } else {
   await navigateTo('/login')

@@ -107,24 +107,13 @@ const previewRow = computed(() => {
 
 const processImport = async () => {
   step.value = 3
-  const supabase = useSupabaseClient()
   const toast = useToast()
 
   try {
-    const itemsToInsert: any[] = []
-    const valuesToInsert: any[] = []
-
-    // 1. Create Items
-    // We can't batch insert items easily and get IDs back in a way that maps 1:1 reliably without specific order guarantees.
-    // However, Supabase insert returns rows. If we insert N items, we get N rows.
-    
     // Identify required fields
     const requiredFields = props.collectionFields.filter(f => f.required).map(f => f.id)
     let skippedCount = 0
-
-    // Filter data before processing
-    // We need to map keys first to check values against field IDs
-    const validRows: any[] = []
+    const validRowsForImport: any[] = []
 
     fullData.value.forEach((row) => {
       let isValid = true
@@ -134,8 +123,6 @@ const processImport = async () => {
         const header = mapping.value[fieldId]
         const value = row[header]
         
-        // Check if empty (undefined, null, or empty string)
-        // Numeric 0 is valid. False is valid.
         if (value === undefined || value === null || value === '') {
           isValid = false
           break
@@ -143,55 +130,31 @@ const processImport = async () => {
       }
 
       if (isValid) {
-        validRows.push(row)
+        // Map excel row to our internal values format
+        const values: Record<string, any> = {}
+        Object.entries(mapping.value).forEach(([fieldId, excelHeader]) => {
+          const value = row[excelHeader]
+          if (value !== undefined && value !== null && value !== '') {
+            values[fieldId] = value
+          }
+        })
+        validRowsForImport.push({ values })
       } else {
         skippedCount++
       }
     })
 
-    const batchSize = 50
-    const chunks = []
-    for (let i = 0; i < validRows.length; i += batchSize) {
-      chunks.push(validRows.slice(i, i + batchSize))
-    }
-
-    for (const chunk of chunks) {
-      // 1. Insert Items
-      const { data: createdItems, error: itemError } = await supabase
-        .from('items')
-        .insert(chunk.map(() => ({ collection_id: props.collectionId })))
-        .select()
-      
-      if (itemError) throw itemError
-
-      // 2. Prepare Values
-      createdItems.forEach((item, index) => {
-        const rowData = chunk[index]
-        Object.entries(mapping.value).forEach(([fieldId, excelHeader]) => {
-          const value = rowData[excelHeader as keyof typeof rowData]
-          if (value !== undefined && value !== null && value !== '') {
-            valuesToInsert.push({
-              item_id: item.id,
-              field_id: fieldId,
-              value: value 
-            })
-          }
-        })
-      })
-    }
-
-    // 3. Insert Values Batch
-    if (valuesToInsert.length > 0) {
-       const { error: valError } = await supabase
-         .from('item_values')
-         .insert(valuesToInsert)
-       
-       if (valError) throw valError
-    }
+    // Call our new bulk import API
+    await $fetch(`/api/collections/${props.collectionId}/import`, {
+      method: 'POST',
+      body: {
+        items: validRowsForImport
+      }
+    })
 
     toast.add({ 
-      title: 'Success', 
-      description: `Imported ${validRows.length} items. Skipped ${skippedCount} items due to missing required fields.`, 
+      title: 'Sucesso', 
+      description: `Importados ${validRowsForImport.length} itens. Pulados ${skippedCount} itens por falta de campos obrigatórios.`, 
       color: 'green',
       timeout: 5000 
     })
@@ -200,7 +163,7 @@ const processImport = async () => {
 
   } catch (error: any) {
     console.error(error)
-    toast.add({ title: 'Error', description: error.message, color: 'red' })
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
     step.value = 2 // Go back
   }
 }

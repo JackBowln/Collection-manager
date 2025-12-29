@@ -60,7 +60,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:modelValue'])
 
-const supabase = useSupabaseClient()
 const toast = useToast()
 
 const visibility = computed({
@@ -83,13 +82,11 @@ const shares = ref<any[]>([])
 const loadShares = async () => {
   if (!props.collectionId) return
   
-  const { data, error } = await supabase
-    .from('collection_shares')
-    .select(`id, user_id, profiles ( id, email, full_name, avatar_url )`)
-    .eq('collection_id', props.collectionId)
-  
-  if (!error && data) {
-    shares.value = data
+  try {
+    const data = await $fetch(`/api/collections/${props.collectionId}/shares`)
+    shares.value = (data as any)
+  } catch (e) {
+    console.error('Error loading shares:', e)
   }
 }
 
@@ -100,40 +97,18 @@ const addUser = async () => {
   
   adding.value = true
   try {
-    // 1. Find User ID
-    const { data: users, error: searchError } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', emailInput.value)
-      .single()
-      
-    if (searchError || !users) {
-      toast.add({ title: 'Usuário não encontrado', description: 'Nenhum usuário encontrado com este e-mail.', color: 'red' })
-      return
-    }
-
-    // 2. Add Share
-    const { error: shareError } = await (supabase
-      .from('collection_shares') as any)
-      .insert({
-        collection_id: props.collectionId,
-        user_id: (users as any).id
-      })
+    await $fetch(`/api/collections/${props.collectionId}/shares`, {
+      method: 'POST',
+      body: { email: emailInput.value }
+    })
     
-    if (shareError) {
-      if (shareError.code === '23505') { // Unique violation
-         toast.add({ title: 'Já compartilhado', description: 'Usuário já tem acesso.', color: 'orange' })
-      } else {
-         throw shareError
-      }
-    } else {
-      toast.add({ title: 'Adicionado', color: 'green' })
-      emailInput.value = ''
-      loadShares()
-    }
+    toast.add({ title: 'Adicionado', color: 'green' })
+    emailInput.value = ''
+    loadShares()
 
   } catch (error: any) {
-    toast.add({ title: 'Erro', description: error.message, color: 'red' })
+    const msg = error.statusCode === 404 ? 'Usuário não encontrado' : (error.statusCode === 409 ? 'Já compartilhado' : error.message)
+    toast.add({ title: 'Erro', description: msg, color: 'red' })
   } finally {
     adding.value = false
   }
@@ -142,12 +117,11 @@ const addUser = async () => {
 const removeUser = async (shareId: string) => {
   if (!confirm('Remover acesso para este usuário?')) return
   
-  const { error } = await supabase.from('collection_shares').delete().eq('id', shareId)
-  
-  if (error) {
-    toast.add({ title: 'Erro', description: error.message, color: 'red' })
-  } else {
+  try {
+    await $fetch(`/api/collections/${props.collectionId}/shares/${shareId}`, { method: 'DELETE' })
     loadShares()
+  } catch (e: any) {
+    toast.add({ title: 'Erro', description: e.message, color: 'red' })
   }
 }
 </script>

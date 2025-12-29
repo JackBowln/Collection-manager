@@ -42,8 +42,7 @@ export { slidOverInjectionKey, useSlideover } from '../node_modules/@nuxt/ui/dis
 export { useTimer } from '../node_modules/@nuxt/ui/dist/runtime/composables/useTimer';
 export { useToast } from '../node_modules/@nuxt/ui/dist/runtime/composables/useToast';
 export { useUI } from '../node_modules/@nuxt/ui/dist/runtime/composables/useUI';
-export { useSupabaseClient } from '../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient';
-export { useSupabaseCookieRedirect } from '../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseCookieRedirect';
-export { useSupabaseSession } from '../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseSession';
-export { useSupabaseUser } from '../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser';
+export { useMultipartUpload } from '../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useMultipartUpload';
+export { useUpload } from '../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useUpload';
 export { useColorMode } from '../node_modules/@nuxtjs/color-mode/dist/runtime/composables';
+export { useUserSession } from '../node_modules/nuxt-auth-utils/dist/runtime/app/composables/session';

@@ -1,0 +1,2 @@
+import{l as a,m as s,E as t,x as o,F as m,y as n,j as e,n as r}from"../../../../_/nitro.mjs";import{r as i}from"../../../../_/auth.mjs";import"node:async_hooks";const p=a(async a=>{await i(a),s("blob");const{pathnames:p}=await t(a,o({pathnames:m(n().min(1)).min(1)}).parse);return await e().delete(p.map(a=>decodeURIComponent(a))),r(a)});export{p as default};
+//# sourceMappingURL=delete.post.mjs.map

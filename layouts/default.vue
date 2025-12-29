@@ -51,8 +51,8 @@
 
           <UDropdown v-if="user" :items="userItems" :popper="{ placement: 'bottom-end' }">
             <UAvatar 
-              :src="user.user_metadata.avatar_url" 
-              :alt="user.user_metadata.full_name"
+              :src="(user as any).avatar" 
+              :alt="(user as any).name"
               size="sm"
               class="ring-2 ring-white dark:ring-gray-900 cursor-pointer hover:ring-primary-500 transition-all"
             />
@@ -80,8 +80,7 @@
 </template>
 
 <script setup lang="ts">
-const user = useSupabaseUser()
-const supabase = useSupabaseClient()
+const { user, clear } = useUserSession()
 const colorMode = useColorMode()
 
 const isDark = computed({
@@ -93,9 +92,9 @@ const isDark = computed({
   }
 })
 
-const userItems = [
+const userItems = computed(() => [
   [{
-    label: user.value?.user_metadata.full_name || 'Usuário',
+    label: (user.value as any)?.name || 'Usuário',
     slot: 'account',
     disabled: true
   }],
@@ -108,9 +107,9 @@ const userItems = [
     label: 'Sair',
     icon: 'i-heroicons-arrow-left-on-rectangle',
     click: async () => {
-      await supabase.auth.signOut()
+      await clear()
       navigateTo('/login')
     }
   }]
-]
+])
 </script>

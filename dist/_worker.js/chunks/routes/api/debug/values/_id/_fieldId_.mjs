@@ -1,0 +1,2 @@
+import{d as e,e as a,g as r,h as s}from"../../../../../_/nitro.mjs";import"node:async_hooks";const t=e(async e=>{const{user:t}=await a(e);r(e,"id");const n=r(e,"fieldId"),o=s(),l=await o.prepare("\n    SELECT value \n    FROM item_values \n    WHERE field_id = ? \n    LIMIT 20\n  ").bind(n).all();return{rawRows:l.results,parsedAttempts:l.results.map(e=>{try{return{raw:e.value,parsed:JSON.parse(e.value),type:typeof JSON.parse(e.value)}}catch(a){return{raw:e.value,error:a.message}}})}});export{t as default};
+//# sourceMappingURL=_fieldId_.mjs.map

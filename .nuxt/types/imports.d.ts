@@ -122,6 +122,7 @@ declare global {
   const useLoadingIndicator: typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator').useLoadingIndicator
   const useModal: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useModal').useModal
   const useModel: typeof import('vue').useModel
+  const useMultipartUpload: typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useMultipartUpload').useMultipartUpload
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt').useNuxtApp
   const useNuxtData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData').useNuxtData
   const usePopper: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/usePopper').usePopper
@@ -177,15 +178,13 @@ declare global {
   const useSlideover: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useSlideover').useSlideover
   const useSlots: typeof import('vue').useSlots
   const useState: typeof import('../../node_modules/nuxt/dist/app/composables/state').useState
-  const useSupabaseClient: typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient').useSupabaseClient
-  const useSupabaseCookieRedirect: typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseCookieRedirect').useSupabaseCookieRedirect
-  const useSupabaseSession: typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseSession').useSupabaseSession
-  const useSupabaseUser: typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser').useSupabaseUser
   const useTemplateRef: typeof import('vue').useTemplateRef
   const useTimer: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useTimer').useTimer
   const useToast: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useToast').useToast
   const useTransitionState: typeof import('vue').useTransitionState
   const useUI: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useUI').useUI
+  const useUpload: typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useUpload').useUpload
+  const useUserSession: typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/app/composables/session').useUserSession
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
   const watchPostEffect: typeof import('vue').watchPostEffect
@@ -328,6 +327,7 @@ declare module 'vue' {
     readonly useLoadingIndicator: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator')['useLoadingIndicator']>
     readonly useModal: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useModal')['useModal']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
+    readonly useMultipartUpload: UnwrapRef<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useMultipartUpload')['useMultipartUpload']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
     readonly usePopper: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/usePopper')['usePopper']>
@@ -383,15 +383,13 @@ declare module 'vue' {
     readonly useSlideover: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useSlideover')['useSlideover']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']>
-    readonly useSupabaseClient: UnwrapRef<typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient')['useSupabaseClient']>
-    readonly useSupabaseCookieRedirect: UnwrapRef<typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseCookieRedirect')['useSupabaseCookieRedirect']>
-    readonly useSupabaseSession: UnwrapRef<typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseSession')['useSupabaseSession']>
-    readonly useSupabaseUser: UnwrapRef<typeof import('../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser')['useSupabaseUser']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTimer: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useTimer')['useTimer']>
     readonly useToast: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useToast')['useToast']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly useUI: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useUI')['useUI']>
+    readonly useUpload: UnwrapRef<typeof import('../../node_modules/@nuxthub/core/dist/runtime/blob/app/composables/useUpload')['useUpload']>
+    readonly useUserSession: UnwrapRef<typeof import('../../node_modules/nuxt-auth-utils/dist/runtime/app/composables/session')['useUserSession']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
     readonly watchPostEffect: UnwrapRef<typeof import('vue')['watchPostEffect']>

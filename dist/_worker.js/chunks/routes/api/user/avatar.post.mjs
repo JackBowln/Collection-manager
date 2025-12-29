@@ -1,0 +1,2 @@
+import{d as a,e as t,i as s,b as o,j as e}from"../../../_/nitro.mjs";import"node:async_hooks";const n=a(async a=>{var n;const{user:i}=await t(a),d=await s(a);if(!d)throw o({statusCode:400,message:"No data"});const r=d.find(a=>"file"===a.name);if(!r)throw o({statusCode:400,message:"No file"});const p=(null==(n=r.filename)?void 0:n.split(".").pop())||"png",f=`avatars/${i.id}-${Date.now()}.${p}`;return{url:(await e().put(f,r.data,{contentType:r.type,addRandomSuffix:!1})).pathname}});export{n as default};
+//# sourceMappingURL=avatar.post.mjs.map

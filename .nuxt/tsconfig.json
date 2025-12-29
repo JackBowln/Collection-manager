@@ -112,6 +112,9 @@
       "#hub/openapi": [
         "../node_modules/@nuxthub/core/dist/runtime/openapi/server/templates/openapi"
       ],
+      "#auth-utils": [
+        "../node_modules/nuxt-auth-utils/dist/runtime/types/index"
+      ],
       "#vue-router": [
         "../node_modules/vue-router"
       ],
@@ -125,7 +128,7 @@
         "./tailwind/expose"
       ],
       "#app-manifest": [
-        "./manifest/meta/b247dfd0-2c9f-4e08-9314-69dfdc6948d0.json"
+        "./manifest/meta/08ea3146-5c05-4aa4-9812-6f6240381da9.json"
       ],
       "#components": [
         "./components"

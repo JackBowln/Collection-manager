@@ -4,7 +4,7 @@
     
     <!-- Add Comment -->
     <div class="mb-6 flex gap-3" v-if="user">
-      <UAvatar :src="user.user_metadata.avatar_url" :alt="user.user_metadata.full_name" />
+      <UAvatar :src="(user as any).avatar" :alt="(user as any).name" />
       <div class="flex-1 space-y-2">
         <UTextarea v-model="newComment" placeholder="Escreva um comentário..." :rows="2" autoresize />
         <div class="flex justify-end">
@@ -19,15 +19,15 @@
         Nenhum comentário ainda. Seja o primeiro!
       </div>
       
-      <div v-else v-for="comment in comments" :key="comment.id" class="flex gap-3">
-        <UAvatar :src="comment.profiles?.avatar_url" :alt="comment.profiles?.full_name" size="sm" />
+      <div v-else v-for="comment in comments" :key="(comment as any).id" class="flex gap-3">
+        <UAvatar :src="(comment as any).avatar_url" :alt="(comment as any).full_name" size="sm" />
         <div class="flex-1">
           <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
             <div class="flex justify-between items-start mb-1">
-              <span class="font-semibold text-sm">{{ comment.profiles?.full_name || 'Anônimo' }}</span>
-              <span class="text-xs text-gray-500">{{ new Date(comment.created_at).toLocaleDateString() }}</span>
+              <span class="font-semibold text-sm">{{ (comment as any).full_name || 'Anônimo' }}</span>
+              <span class="text-xs text-gray-500">{{ new Date((comment as any).created_at).toLocaleDateString() }}</span>
             </div>
-            <p class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{{ comment.content }}</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{{ (comment as any).content }}</p>
           </div>
         </div>
       </div>
@@ -40,8 +40,7 @@ const props = defineProps<{
   collectionId: string
 }>()
 
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+const { user } = useUserSession()
 const toast = useToast()
 
 const comments = ref<any[]>([])
@@ -49,19 +48,11 @@ const newComment = ref('')
 const posting = ref(false)
 
 const loadComments = async () => {
-  const { data, error } = await supabase
-    .from('comments')
-    .select(`
-      id, 
-      content, 
-      created_at, 
-      profiles ( full_name, avatar_url )
-    `)
-    .eq('collection_id', props.collectionId)
-    .order('created_at', { ascending: false })
-  
-  if (!error && data) {
-    comments.value = data
+  try {
+    const data = await $fetch(`/api/collections/${props.collectionId}/comments`)
+    comments.value = (data as any)
+  } catch (e) {
+    console.error('Error loading comments:', e)
   }
 }
 
@@ -70,15 +61,12 @@ const postComment = async () => {
   
   posting.value = true
   try {
-    const { error } = await supabase
-      .from('comments')
-      .insert({
-        collection_id: props.collectionId,
-        user_id: user.value.id,
+    await $fetch(`/api/collections/${props.collectionId}/comments`, {
+      method: 'POST',
+      body: {
         content: newComment.value.trim()
-      })
-    
-    if (error) throw error
+      }
+    })
     
     newComment.value = ''
     loadComments()

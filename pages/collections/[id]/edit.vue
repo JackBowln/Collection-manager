@@ -56,7 +56,6 @@
 <script setup lang="ts">
 const route = useRoute()
 const collectionId = route.params.id as string
-const supabase = useSupabaseClient()
 const toast = useToast()
 const loading = ref(false)
 
@@ -68,23 +67,20 @@ const form = reactive({
 })
 
 // Load Data
-onMounted(async () => {
-  const { data, error } = await supabase
-    .from('collections')
-    .select(`*, fields (*)`)
-    .eq('id', collectionId)
-    .single()
-  
-  if (error) {
-    toast.add({ title: 'Error', description: 'Could not load collection', color: 'red' })
-    navigateTo('/dashboard')
-    return
-  }
+const { data, error } = await useFetch(`/api/collections/${collectionId}`)
 
-  form.name = data.name
-  form.description = data.description
-  form.visibility = data.visibility || 'private'
-  form.fields = (data.fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order).map((f: any) => ({ ...f, selected: false }))
+watchEffect(() => {
+  if (data.value) {
+    const d = data.value as any
+    form.name = d.name
+    form.description = d.description
+    form.visibility = d.visibility || 'private'
+    form.fields = (d.fields || []).sort((a: any, b: any) => a.folder_order - b.folder_order).map((f: any) => ({ ...f, is_dynamic: !!f.is_dynamic, selected: false }))
+  }
+  if (error.value) {
+    toast.add({ title: 'Erro', description: 'Não foi possível carregar a coleção', color: 'red' })
+    navigateTo('/dashboard')
+  }
 })
 
 const addField = () => {
@@ -96,6 +92,7 @@ const addField = () => {
     visible: true,
     required: false,
     selected: false,
+    is_dynamic: false,
     folder_order: form.fields.length
   })
 }
@@ -105,12 +102,10 @@ const removeField = async (index: number) => {
   if (field.id) {
     if (!confirm(`Tem certeza que deseja excluir o campo "${field.name}"? Todos os dados deste campo serão perdidos!`)) return
     
-    // Perform delete immediately or mark for deletion?
-    // Safer to delete on save, but that complicates state.
-    // Let's delete immediately if user confirms, to simplify state sync
-    const { error } = await supabase.from('fields').delete().eq('id', field.id)
-    if (error) {
-        toast.add({ title: 'Erro', description: error.message, color: 'red' })
+    try {
+        await $fetch(`/api/collections/${collectionId}/fields/${field.id}`, { method: 'DELETE' })
+    } catch (e: any) {
+        toast.add({ title: 'Erro', description: e.message, color: 'red' })
         return
     }
   }
@@ -139,9 +134,10 @@ const deleteSelectedFields = async () => {
   const idsToDelete = selected.map(f => f.id).filter(id => !!id)
   
   if (idsToDelete.length > 0) {
-     const { error } = await supabase.from('fields').delete().in('id', idsToDelete)
-     if (error) {
-       toast.add({ title: 'Erro', description: error.message, color: 'red' })
+     try {
+       await Promise.all(idsToDelete.map(id => $fetch(`/api/collections/${collectionId}/fields/${id}`, { method: 'DELETE' })))
+     } catch (e: any) {
+       toast.add({ title: 'Erro', description: e.message, color: 'red' })
        return
      }
   }
@@ -152,74 +148,18 @@ const deleteSelectedFields = async () => {
 }
 
 const saveCollection = async () => {
-// ... existing save implementation ...
   try {
     loading.value = true
     
-    // 1. Update Collection
-    const { error: colError } = await supabase
-      .from('collections')
-      .update({ 
-        name: form.name, 
+    await $fetch(`/api/collections/${collectionId}`, {
+      method: 'PATCH',
+      body: {
+        name: form.name,
         description: form.description,
-        visibility: form.visibility 
-      })
-      .eq('id', collectionId)
-    
-    if (colError) throw colError
-
-    // 2. Process Fields
-    // We need to split updates and inserts to avoid sending "id: null" which violates constraints
-    
-    // First, map all fields to the correct payload shape including correct folder_order
-    const allFieldsPayload = form.fields.map((f, index) => ({
-      ...f,
-      collection_id: collectionId,
-      folder_order: index,
-      // Ensure we only send what's needed
-      name: f.name,
-      type: f.type,
-      options: f.options,
-      visible: f.visible,
-      required: f.required || false
-    }))
-
-    const fieldsToUpdate = allFieldsPayload.filter((f: any) => f.id).map((f: any) => ({
-      id: f.id,
-      collection_id: f.collection_id,
-      name: f.name,
-      type: f.type,
-      options: f.options,
-      visible: f.visible,
-      required: f.required,
-      folder_order: f.folder_order
-    }))
-
-    const fieldsToInsert = allFieldsPayload.filter((f: any) => !f.id).map((f: any) => ({
-      collection_id: f.collection_id,
-      name: f.name,
-      type: f.type,
-      options: f.options,
-      visible: f.visible,
-      required: f.required,
-      folder_order: f.folder_order
-    }))
-
-    // Execute Update (Upsert) checking for errors
-    if (fieldsToUpdate.length > 0) {
-      const { error: updateError } = await supabase
-        .from('fields')
-        .upsert(fieldsToUpdate)
-      if (updateError) throw updateError
-    }
-
-    // Execute Insert checking for errors
-    if (fieldsToInsert.length > 0) {
-      const { error: insertError } = await supabase
-        .from('fields')
-        .insert(fieldsToInsert)
-      if (insertError) throw insertError
-    }
+        visibility: form.visibility,
+        fields: form.fields.map((f, index) => ({ ...f, folder_order: index }))
+      }
+    })
 
     toast.add({ title: 'Sucesso', description: 'Coleção atualizada', color: 'green' })
     navigateTo(`/collections/${collectionId}`)

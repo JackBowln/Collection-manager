@@ -70,6 +70,7 @@ export const UPopover: typeof import("../node_modules/@nuxt/ui/dist/runtime/comp
 export const USlideover: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Slideover.vue").default
 export const USlideovers: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Slideovers.client.vue").default
 export const UTooltip: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Tooltip.vue").default
+export const AuthState: typeof import("../node_modules/nuxt-auth-utils/dist/runtime/app/components/AuthState.vue").default
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue").default
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout").default
 export const NuxtErrorBoundary: typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue").default
@@ -151,6 +152,7 @@ export const LazyUPopover: LazyComponent<typeof import("../node_modules/@nuxt/ui
 export const LazyUSlideover: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Slideover.vue").default>
 export const LazyUSlideovers: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Slideovers.client.vue").default>
 export const LazyUTooltip: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/overlays/Tooltip.vue").default>
+export const LazyAuthState: LazyComponent<typeof import("../node_modules/nuxt-auth-utils/dist/runtime/app/components/AuthState.vue").default>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue").default>
 export const LazyNuxtLayout: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout").default>
 export const LazyNuxtErrorBoundary: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue").default>

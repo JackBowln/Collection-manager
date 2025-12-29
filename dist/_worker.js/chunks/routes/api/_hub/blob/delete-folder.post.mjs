@@ -1,0 +1,2 @@
+import{l as a,m as s,E as t,x as o,y as r,j as i,n as e}from"../../../../_/nitro.mjs";import{r as m}from"../../../../_/auth.mjs";import"node:async_hooks";const n=a(async a=>{await m(a),s("blob");const{prefix:n}=await t(a,o({prefix:r().min(1)}).parse),p=i();let l;const c=[];do{const a=await p.list({prefix:n,limit:1e3,cursor:l});c.push(...a.blobs.map(a=>a.pathname)),l=a.cursor}while(l);return await p.delete(c),e(a)});export{n as default};
+//# sourceMappingURL=delete-folder.post.mjs.map

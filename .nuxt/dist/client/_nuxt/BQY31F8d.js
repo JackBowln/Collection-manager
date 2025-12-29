@@ -1,0 +1,1 @@
+import{f as o,g as i,h as n,n as t,c as r,o as c}from"./fMH9WF-P.js";const m=o({__name:"index",async setup(_){let e,a;const{loggedIn:s}=i();return s.value?([e,a]=n(()=>t("/dashboard")),await e,a()):([e,a]=n(()=>t("/login")),await e,a()),(l,d)=>(c(),r("div",null,"Redirecting..."))}});export{m as default};

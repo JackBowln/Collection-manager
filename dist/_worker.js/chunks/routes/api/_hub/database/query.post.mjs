@@ -1,0 +1,2 @@
+import{l as a,m as r,E as s,x as o,h as t,I as m,L as e,y as l}from"../../../../_/nitro.mjs";import{r as n}from"../../../../_/auth.mjs";import"node:async_hooks";const i=o({query:l().min(1).max(1e6).trim(),params:e().array().optional().default([]),mode:m(["raw","all"]).optional().default("all")}),p=a(async a=>{await n(a),r("database");const{query:o,params:m,mode:e}=await s(a,i.parse);return t().prepare(o).bind(...m)["raw"===e?"raw":"all"]({columnNames:!0})});export{p as default};
+//# sourceMappingURL=query.post.mjs.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"query.options.mjs","sources":["../../../../../../../node_modules/@nuxthub/core/dist/runtime/database/server/api/_hub/database/query.options.js"],"names":["query_options","eventHandler","async","event","requireNuxtHubAuthorization","sendNoContent"],"mappings":"","x_google_ignoreList":[0]}

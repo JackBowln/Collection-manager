@@ -55,8 +55,7 @@
 </template>
 
 <script setup lang="ts">
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+const { loggedIn } = useUserSession()
 const toast = useToast()
 
 const loading = ref(false)
@@ -75,6 +74,8 @@ const addField = () => {
     options: [],
     visible: true,
     required: false,
+    is_dynamic: false,
+    selected: false,
     folder_order: form.fields.length
   })
 }
@@ -84,44 +85,21 @@ const removeField = (index: number) => {
 }
 
 const saveCollection = async () => {
-  if (!user.value) return
+  if (!loggedIn.value) return
   if (form.fields.length === 0 && !confirm('Criar coleção sem nenhum campo personalizado?')) return
 
   try {
     loading.value = true
     
-    // 1. Create Collection
-    const { data: collection, error: collectionError } = await supabase
-      .from('collections')
-      .insert({
-        user_id: user.value.id,
+    await $fetch('/api/collections', {
+      method: 'POST',
+      body: {
         name: form.name,
         description: form.description,
-        visibility: form.visibility
-      })
-      .select()
-      .single()
-    
-    if (collectionError) throw collectionError
-
-    if (form.fields.length > 0) {
-      // 2. Create Fields
-      const fieldsToInsert = form.fields.map((f, index) => ({
-        collection_id: collection.id,
-        name: f.name,
-        type: f.type,
-        options: f.options && f.options.length ? f.options : null,
-        visible: f.visible,
-        required: f.required,
-        folder_order: index
-      }))
-
-      const { error: fieldsError } = await supabase
-        .from('fields')
-        .insert(fieldsToInsert)
-      
-      if (fieldsError) throw fieldsError // Ideally rollback collection here but keeping it simple
-    }
+        visibility: form.visibility,
+        fields: form.fields
+      }
+    })
 
     toast.add({ title: 'Sucesso', description: 'Coleção criada com sucesso', color: 'green' })
     navigateTo('/dashboard')

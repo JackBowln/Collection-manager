@@ -2,17 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxthub/core', '@nuxthub/core-nightly'],
+  modules: ['@nuxt/ui', '@nuxthub/core', 'nuxt-auth-utils'],
   hub: {
-    // NuxtHub configuration
-  },
-  supabase: {
-    redirect: false, // We will handle redirects manually with middleware
-    redirectOptions: {
-      login: '/login',
-      callback: '/confirm',
-      exclude: ['/', '/register']
-    }
+    database: true,
+    blob: true,
+    kv: true
   },
   runtimeConfig: {
     public: {

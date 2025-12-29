@@ -1,0 +1,2 @@
+import{d as a,e as r,f as s,h as t,k as e}from"../../../_/nitro.mjs";import"node:async_hooks";const n=a(async a=>{const{user:n}=await r(a),u=await s(a),i=t();return await i.prepare("UPDATE profiles SET full_name = ?, avatar_url = ? WHERE id = ?").bind(u.full_name,u.avatar_url,n.id).run(),await e(a,{user:{...n,name:u.full_name,avatar:u.avatar_url}}),{success:!0}});export{n as default};
+//# sourceMappingURL=profile.patch.mjs.map

@@ -21,7 +21,7 @@
           <div class="flex flex-col items-center sm:flex-row gap-6 mb-6">
              <div class="relative group cursor-pointer" @click="triggerFileInput">
                 <UAvatar 
-                  :src="form.avatar_url || user?.user_metadata?.avatar_url" 
+                  :src="form.avatar_url || (user as any)?.avatar" 
                   :alt="form.full_name" 
                   size="3xl" 
                   class="ring-4 ring-gray-100 dark:ring-gray-800 transition-opacity group-hover:opacity-75"
@@ -63,7 +63,7 @@
             </UFormGroup>
 
             <UFormGroup label="E-mail" help="O e-mail não pode ser alterado.">
-              <UInput :model-value="user?.email" icon="i-heroicons-envelope" disabled color="gray" variant="filled" />
+              <UInput :model-value="(user as any)?.email" icon="i-heroicons-envelope" disabled color="gray" />
             </UFormGroup>
           </div>
           
@@ -104,8 +104,7 @@
 </template>
 
 <script setup lang="ts">
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+const { user } = useUserSession()
 const toast = useToast()
 const colorMode = useColorMode()
 
@@ -118,8 +117,8 @@ const form = reactive({
 // Initialize form
 watchEffect(() => {
   if (user.value) {
-    form.full_name = user.value.user_metadata.full_name || ''
-    form.avatar_url = user.value.user_metadata.avatar_url || ''
+    form.full_name = (user.value as any).name || ''
+    form.avatar_url = (user.value as any).avatar || ''
   }
 })
 
@@ -138,7 +137,6 @@ const handleFileUpload = async (event: any) => {
   const file = event.target.files[0]
   if (!file || !user.value) return
 
-  // Validate file type/size if needed
   if (!file.type.startsWith('image/')) {
     toast.add({ title: 'Erro', description: 'Por favor envie apenas imagens.', color: 'red' })
     return
@@ -146,32 +144,19 @@ const handleFileUpload = async (event: any) => {
 
   try {
     uploading.value = true
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${user.value.id}-${Date.now()}.${fileExt}`
-    const filePath = `profiles/${fileName}`
+    const formData = new FormData()
+    formData.append('file', file)
 
-    // 1. Upload to Supabase Storage
-    const { error: uploadError } = await supabase.storage
-      .from('avatars')
-      .upload(filePath, file, { upsert: true })
+    const data = await $fetch('/api/user/avatar', {
+      method: 'POST',
+      body: formData
+    })
 
-    if (uploadError) throw uploadError
-
-    // 2. Get Public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('avatars')
-      .getPublicUrl(filePath)
-
-    // 3. Update Form
-    form.avatar_url = publicUrl
+    form.avatar_url = (data as any).url
     toast.add({ title: 'Upload concluído', color: 'green' })
 
   } catch (error: any) {
-    if (error.message.includes('bucket not found')) {
-       toast.add({ title: 'Erro de Configuração', description: 'Bucket "avatars" não encontrado. Verifique o guia.', color: 'red' })
-    } else {
-       toast.add({ title: 'Erro no Upload', description: error.message, color: 'red' })
-    }
+    toast.add({ title: 'Erro no Upload', description: error.message, color: 'red' })
   } finally {
     uploading.value = false
   }
@@ -180,28 +165,14 @@ const handleFileUpload = async (event: any) => {
 const updateProfile = async () => {
   try {
     loading.value = true
-    const updates = {
-      id: user.value?.id,
-      full_name: form.full_name,
-      avatar_url: form.avatar_url
-    }
-
-    // 1. Update public.profiles table (for app logic)
-    const { error: dbError } = await supabase
-      .from('profiles')
-      .upsert(updates)
-
-    if (dbError) throw dbError
-
-    // 2. Update Auth Metadata (for session/header consistency)
-    const { error: authError } = await supabase.auth.updateUser({
-      data: {
+    
+    await $fetch('/api/user/profile', {
+      method: 'PATCH',
+      body: {
         full_name: form.full_name,
         avatar_url: form.avatar_url
       }
     })
-
-    if (authError) throw authError
 
     toast.add({ title: 'Perfil atualizado', color: 'green' })
     

@@ -74,28 +74,10 @@
 </template>
 
 <script setup lang="ts">
-const supabase = useSupabaseClient()
-
 definePageMeta({
   layout: 'default'
 })
 
 // Fetch Public Collections with Owner Profile
-const { data: collections, pending } = await useAsyncData('public-collections', async () => {
-  const { data, error } = await supabase
-    .from('collections')
-    .select(`
-      id, 
-      name, 
-      description, 
-      created_at, 
-      visibility,
-      owner:profiles ( full_name, avatar_url )
-    `)
-    .eq('visibility', 'public')
-    .order('created_at', { ascending: false })
-
-  if (error) throw error
-  return data || []
-})
+const { data: collections, pending } = await useFetch('/api/explore') as any
 </script>

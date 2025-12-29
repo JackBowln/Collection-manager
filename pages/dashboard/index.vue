@@ -4,7 +4,7 @@
     <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
       <div>
         <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2">
-          Bem-vindo, <span class="text-primary-500">{{ user?.user_metadata.full_name?.split(' ')[0] }}</span>
+          Bem-vindo, <span class="text-primary-500">{{ (user as any)?.name?.split(' ')[0] }}</span>
         </h1>
         <p class="text-gray-500 dark:text-gray-400">Gerencie suas coleções ou descubra novidades.</p>
       </div>
@@ -29,17 +29,17 @@
         </div>
         
         <!-- Empty -->
-        <div v-else-if="collections?.length === 0" class="text-center py-8 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-lg">
+        <div v-else-if="!(collections as any)?.length" class="text-center py-8 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-lg">
            <p class="text-gray-500">Você não tem coleções criadas.</p>
         </div>
 
         <!-- Grid -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
            <UCard
-             v-for="collection in collections"
-             :key="collection.id"
+             v-for="collection in (collections as any)"
+             :key="(collection as any).id"
              class="group cursor-pointer border-0 ring-1 ring-gray-200 dark:ring-gray-800 shadow-sm hover:shadow-xl hover:ring-primary-500/50 dark:hover:ring-primary-500/50 transition-all duration-300 transform hover:-translate-y-1 bg-white dark:bg-gray-900 overflow-hidden"
-             @click="goToCollection(collection.id)"
+             @click="goToCollection((collection as any).id)"
            >
              <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                 <UDropdown :items="getActionItems(collection)" @click.stop>
@@ -62,13 +62,13 @@
                 </p>
 
                 <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
-                  <span class="text-xs text-gray-400 font-mono">{{ new Date(collection.created_at).toLocaleDateString() }}</span>
+                  <span class="text-xs text-gray-400 font-mono">{{ new Date((collection as any).created_at).toLocaleDateString() }}</span>
                   <UBadge 
                     size="xs" 
                     variant="subtle" 
-                    :color="collection.visibility === 'public' ? 'green' : (collection.visibility === 'shared' ? 'purple' : 'gray')"
+                    :color="(collection as any).visibility === 'public' ? 'green' : ((collection as any).visibility === 'shared' ? 'purple' : 'gray')"
                   >
-                    {{ collection.visibility === 'public' ? 'Público' : (collection.visibility === 'shared' ? 'Compartilahdo' : 'Privado') }}
+                    {{ (collection as any).visibility === 'public' ? 'Público' : ((collection as any).visibility === 'shared' ? 'Compartilahdo' : 'Privado') }}
                   </UBadge>
                 </div>
              </div>
@@ -135,8 +135,7 @@
 </template>
 
 <script setup lang="ts">
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+const { user } = useUserSession()
 const toast = useToast()
 
 definePageMeta({
@@ -144,40 +143,11 @@ definePageMeta({
 })
 
 // Fetch My Collections
-const { data: collections, pending, refresh: refreshMy } = await useAsyncData('my-collections', async () => {
-  const { data, error } = await supabase
-    .from('collections')
-    .select('*')
-    .eq('user_id', user.value?.id)
-    .order('created_at', { ascending: false })
-  
-  if (error) throw error
-  return data || []
-})
+const { data: collections, pending, refresh } = await useFetch('/api/collections')
 
-// Fetch Shared With Me
-const { data: sharedCollections, pending: pendingShares, refresh: refreshShared } = await useAsyncData('shared-collections', async () => {
-  // Query collection_shares table
-  // We need to join with collections -> profiles to get the owner name
-  const { data, error } = await supabase
-    .from('collection_shares')
-    .select(`
-      id,
-      collection:collections (
-         id, name, description, created_at, visibility,
-         owner:profiles ( full_name, avatar_url, email )
-      )
-    `)
-    .eq('user_id', user.value?.id) // Shared with ME
-  
-  if (error) throw error
-  return data || []
-})
-
-const refresh = () => {
-  refreshMy()
-  refreshShared()
-}
+// Fetch Shared With Me (Placeholder for now, we'll implement later)
+const sharedCollections = ref([])
+const pendingShares = ref(false)
 
 const getActionItems = (collection: any) => [
   [{
@@ -199,16 +169,12 @@ const goToCollection = (id: string) => {
 const confirmDelete = async (id: string) => {
   if (!confirm('Tem certeza que deseja excluir esta coleção e todos os seus itens?')) return
 
-  const { error } = await supabase
-    .from('collections')
-    .delete()
-    .eq('id', id)
-  
-  if (error) {
-    toast.add({ title: 'Erro', description: error.message, color: 'red' })
-  } else {
+  try {
+    await $fetch(`/api/collections/${id}`, { method: 'DELETE' })
     toast.add({ title: 'Sucesso', description: 'Coleção excluída', color: 'green' })
     refresh()
+  } catch (error: any) {
+    toast.add({ title: 'Erro', description: error.message, color: 'red' })
   }
 }
 </script>

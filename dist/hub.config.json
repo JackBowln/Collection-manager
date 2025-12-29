@@ -1,11 +1,11 @@
 {
   "ai": false,
   "analytics": false,
-  "blob": false,
+  "blob": true,
   "browser": false,
   "cache": false,
-  "database": false,
-  "kv": false,
+  "database": true,
+  "kv": true,
   "vectorize": {},
   "bindings": {
     "hyperdrive": {}
